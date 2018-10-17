@@ -1,10 +1,12 @@
 package com.github.christophpickl.snake4k
 
-import com.github.christophpickl.snake4k.board.Board
-import com.github.christophpickl.snake4k.board.Cell
+import com.github.christophpickl.snake4k.board.Direction
 import com.github.christophpickl.snake4k.board.Matrix
+import com.github.christophpickl.snake4k.model.Config
+import com.github.christophpickl.snake4k.model.CurrentState
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
+import com.github.christophpickl.snake4k.view.Board
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
 import javax.inject.Inject
 
@@ -26,6 +28,15 @@ class GameLogic @Inject constructor(
         snake.move(matrix::cellAt)
         board.repaint()
         return TickResult.Ok
+    }
+
+    fun resetState() {
+        state.reset()
+        keyboard.collectedDirections.clear()
+        snake.head = matrix.cellAt(1, 1)
+        snake.direction = Direction.RIGHT
+        snake.body.clear()
+        fruit.position = matrix.randomCell()
     }
 
     private fun checkDirection() {
@@ -64,16 +75,8 @@ class GameLogic @Inject constructor(
             Log.debug { "Fruit eaten at: $newPos" }
             state.fruitsEatenCount++
             snake.growBody += Config.bodyGrowFactorOnFruitEaten
-            fruit.position = nextFruitPosition()
+            fruit.position = board.nextFruitPosition()
         }
-    }
-
-    private fun nextFruitPosition(): Cell {
-        var newPosition = matrix.randomCell()
-        while (snake.contains(newPosition) || fruit.position == newPosition) {
-            newPosition = matrix.randomCell()
-        }
-        return newPosition
     }
 
 }

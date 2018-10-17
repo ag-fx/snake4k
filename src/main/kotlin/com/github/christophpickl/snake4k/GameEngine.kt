@@ -1,10 +1,7 @@
 package com.github.christophpickl.snake4k
 
-import com.github.christophpickl.snake4k.board.Direction
-import com.github.christophpickl.snake4k.board.Matrix
-import com.github.christophpickl.snake4k.model.Fruit
-import com.github.christophpickl.snake4k.model.Snake
-import com.github.christophpickl.snake4k.view.KeyboardWatcher
+import com.github.christophpickl.snake4k.model.Config
+import com.github.christophpickl.snake4k.model.CurrentState
 import com.github.christophpickl.snake4k.view.Window
 import com.google.common.eventbus.EventBus
 import java.awt.EventQueue
@@ -16,11 +13,7 @@ import javax.inject.Inject
 import javax.swing.JOptionPane
 
 class GameEngine @Inject constructor(
-    private val matrix: Matrix,
     private val window: Window,
-    private val snake: Snake,
-    private val fruit: Fruit,
-    private val keyboard: KeyboardWatcher,
     private val logic: GameLogic,
     private val state: CurrentState,
     private val bus: EventBus
@@ -29,7 +22,9 @@ class GameEngine @Inject constructor(
     private var timer: Timer? = null
 
     fun restart() {
-        resetState()
+        logic.resetState()
+        stop()
+
         timer = Timer(true).also { currentTimer ->
             currentTimer.scheduleAtFixedRate(GameTimerTask({
                 val result = logic.onTick()
@@ -48,16 +43,6 @@ class GameEngine @Inject constructor(
 
     fun stop() {
         timer?.cancel()
-    }
-
-    private fun resetState() {
-        stop()
-        state.reset()
-        keyboard.collectedDirections.clear()
-        snake.head = matrix.cellAt(1, 1)
-        snake.direction = Direction.RIGHT
-        snake.body.clear()
-        fruit.position = matrix.randomCell()
     }
 
     private class GameTimerTask(
@@ -79,6 +64,7 @@ class GameEngine @Inject constructor(
     }
 
     private fun gameOver(detailMessage: String) {
+        Log.debug { "Game over: $detailMessage" }
         timer!!.cancel()
         val secondsPlayed = Duration.between(state.timeStarted, LocalDateTime.now()).seconds
         val result = JOptionPane.showOptionDialog(

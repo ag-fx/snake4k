@@ -1,8 +1,8 @@
 package com.github.christophpickl.snake4k.board
 
-import com.github.christophpickl.snake4k.Config
-import com.github.christophpickl.snake4k.Config.countCols
-import com.github.christophpickl.snake4k.Config.countRows
+import com.github.christophpickl.snake4k.model.Config
+import com.github.christophpickl.snake4k.model.Config.countCols
+import com.github.christophpickl.snake4k.model.Config.countRows
 import java.util.Random
 
 class Matrix {

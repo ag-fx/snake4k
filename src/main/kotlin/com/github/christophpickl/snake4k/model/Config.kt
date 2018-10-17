@@ -1,4 +1,4 @@
-package com.github.christophpickl.snake4k
+package com.github.christophpickl.snake4k.model
 
 object Config {
 

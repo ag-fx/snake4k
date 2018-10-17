@@ -1,6 +1,8 @@
-package com.github.christophpickl.snake4k.board
+package com.github.christophpickl.snake4k.view
 
-import com.github.christophpickl.snake4k.Config
+import com.github.christophpickl.snake4k.board.Cell
+import com.github.christophpickl.snake4k.board.Matrix
+import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
 import java.awt.Color
@@ -46,6 +48,14 @@ class Board @Inject constructor(
                 sizeEachCell, sizeEachCell
             )
         }
+    }
+
+    fun nextFruitPosition(): Cell {
+        var newPosition = matrix.randomCell()
+        while (snake.contains(newPosition) || fruit.position == newPosition) {
+            newPosition = matrix.randomCell()
+        }
+        return newPosition
     }
 
 }

@@ -2,7 +2,6 @@ package com.github.christophpickl.snake4k.view
 
 import com.github.christophpickl.snake4k.QuitEvent
 import com.github.christophpickl.snake4k.RestartEvent
-import com.github.christophpickl.snake4k.board.Board
 import com.google.common.eventbus.EventBus
 import java.awt.BorderLayout
 import java.awt.Dimension

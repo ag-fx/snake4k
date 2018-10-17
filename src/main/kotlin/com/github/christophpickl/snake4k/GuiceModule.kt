@@ -1,9 +1,10 @@
 package com.github.christophpickl.snake4k
 
-import com.github.christophpickl.snake4k.board.Board
 import com.github.christophpickl.snake4k.board.Matrix
+import com.github.christophpickl.snake4k.model.CurrentState
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
+import com.github.christophpickl.snake4k.view.Board
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
 import com.github.christophpickl.snake4k.view.Window
 import com.google.common.eventbus.EventBus

@@ -27,7 +27,6 @@ class GameManager @Inject constructor(
             }
         })
         window.addKeyListener(keyboard)
-
         window.isVisible = true
         onRestartEvent()
     }
@@ -55,3 +54,6 @@ class GameManager @Inject constructor(
     }
 
 }
+
+object RestartEvent
+object QuitEvent
