@@ -3,9 +3,8 @@ package com.github.christophpickl.snake4k.model
 import com.github.christophpickl.snake4k.board.Cell
 import com.github.christophpickl.snake4k.board.Direction
 
-class Snake(
-    var head: Cell
-) {
+class Snake {
+    var head: Cell = Cell.empty
     val body = ArrayList<Cell>()
     var direction: Direction = Direction.RIGHT
     var growBody = 0

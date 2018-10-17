@@ -6,23 +6,27 @@ import com.github.christophpickl.snake4k.model.Snake
 import java.awt.Color
 import java.awt.Dimension
 import java.awt.Graphics
+import javax.inject.Inject
 import javax.swing.JPanel
 
-class Board(
+class Board @Inject constructor(
     private val matrix: Matrix,
     private val snake: Snake,
     private val fruit: Fruit
 ) : JPanel() {
+
     init {
         background = Color.WHITE
     }
 
     private val sizeEachCell = 20
     private val gapCells = 2
+
     val boardSize = Dimension(
         Config.countCols * sizeEachCell + ((Config.countCols - 1) * gapCells),
         Config.countRows * sizeEachCell + ((Config.countRows - 1) * gapCells)
     )
+
     private val defaultColor = Color(205, 220, 220)
     private val snakeBodyColor = Color(225, 225, 60)
     private val snakeHeadColor = Color(205, 205, 60)

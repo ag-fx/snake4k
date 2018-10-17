@@ -5,6 +5,7 @@ plugins {
 
 dependencies {
     compile(kotlin("stdlib"))
+    implementation("com.google.inject:guice:4.2.1")
 }
 
 repositories {

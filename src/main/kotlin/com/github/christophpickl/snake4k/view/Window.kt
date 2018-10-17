@@ -1,9 +1,13 @@
 package com.github.christophpickl.snake4k.view
 
+import com.github.christophpickl.snake4k.QuitEvent
+import com.github.christophpickl.snake4k.RestartEvent
 import com.github.christophpickl.snake4k.board.Board
+import com.google.common.eventbus.EventBus
 import java.awt.BorderLayout
 import java.awt.Dimension
 import java.awt.event.KeyEvent
+import javax.inject.Inject
 import javax.swing.BorderFactory
 import javax.swing.JFrame
 import javax.swing.JMenu
@@ -13,10 +17,9 @@ import javax.swing.JPanel
 import javax.swing.KeyStroke
 import javax.swing.WindowConstants
 
-class Window(
+class Window @Inject constructor(
     board: Board,
-    onRestartGame: () -> Unit,
-    onQuit: () -> Unit
+    bus: EventBus
 ) : JFrame() {
     private val padding = 10
 
@@ -31,13 +34,13 @@ class Window(
                 add(JMenuItem("Restart Game").apply {
                     accelerator = KeyStroke.getKeyStroke(KeyEvent.VK_R, KeyEvent.META_MASK, true)
                     addActionListener {
-                        onRestartGame()
+                        bus.post(RestartEvent)
                     }
                 })
                 add(JMenuItem("Quit").apply {
                     accelerator = KeyStroke.getKeyStroke(KeyEvent.VK_Q, KeyEvent.META_MASK, true)
                     addActionListener {
-                        onQuit()
+                        bus.post(QuitEvent)
                     }
                 })
             })

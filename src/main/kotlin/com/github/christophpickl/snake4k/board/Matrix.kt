@@ -7,7 +7,7 @@ import java.util.Random
 
 class Matrix {
 
-    private val data: ArrayList<ArrayList<Cell>> = ArrayList() // rows than cols
+    private val rowsThanCols: ArrayList<ArrayList<Cell>> = ArrayList()
     private val random = Random()
 
     init {
@@ -16,16 +16,15 @@ class Matrix {
             0.until(Config.countCols).forEach { x ->
                 row += Cell(x, y)
             }
-            data += row
+            rowsThanCols += row
         }
     }
 
     fun cellAt(xy: Pair<Int, Int>) = cellAt(xy.first, xy.second)
-
-    fun cellAt(x: Int, y: Int) = data[y][x]
+    fun cellAt(x: Int, y: Int) = rowsThanCols[y][x]
 
     fun forEach(action: (Cell) -> Unit) {
-        data.forEach { row ->
+        rowsThanCols.forEach { row ->
             row.forEach {
                 action(it)
             }

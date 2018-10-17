@@ -5,4 +5,8 @@ data class Cell(
     val y: Int
 ) {
     val xy = x to y
+
+    companion object {
+        val empty = Cell(0, 0)
+    }
 }

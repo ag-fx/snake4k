@@ -6,8 +6,9 @@ import com.github.christophpickl.snake4k.board.Matrix
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
+import javax.inject.Inject
 
-class GameLogic(
+class GameLogic @Inject constructor(
     private val keyboard: KeyboardWatcher,
     private val matrix: Matrix,
     private val board: Board,

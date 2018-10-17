@@ -6,22 +6,24 @@ import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
 import com.github.christophpickl.snake4k.view.Window
+import com.google.common.eventbus.EventBus
 import java.awt.EventQueue
 import java.time.Duration
 import java.time.LocalDateTime
 import java.util.Timer
 import java.util.TimerTask
+import javax.inject.Inject
 import javax.swing.JOptionPane
 
-class GameEngine(
+class GameEngine @Inject constructor(
     private val matrix: Matrix,
     private val window: Window,
     private val snake: Snake,
     private val fruit: Fruit,
     private val keyboard: KeyboardWatcher,
-    private val onQuit: () -> Unit,
     private val logic: GameLogic,
-    private val state: CurrentState
+    private val state: CurrentState,
+    private val bus: EventBus
 ) {
 
     private var timer: Timer? = null
@@ -89,8 +91,8 @@ class GameEngine(
             arrayOf("Quit", "Restart"), "Restart"
         )
         when (result) {
-            0 -> onQuit()
-            1 -> restart()
+            0 -> bus.post(QuitEvent)
+            1 -> bus.post(RestartEvent)
         }
     }
 
