@@ -1,7 +1,5 @@
 package com.github.christophpickl.snake4k
 
-import com.github.christophpickl.snake4k.board.Board
-import com.github.christophpickl.snake4k.board.Cell
 import com.github.christophpickl.snake4k.board.Direction
 import com.github.christophpickl.snake4k.board.Matrix
 import com.github.christophpickl.snake4k.model.Fruit
@@ -17,27 +15,28 @@ import javax.swing.JOptionPane
 
 class GameEngine(
     private val matrix: Matrix,
-    private val board: Board,
     private val window: Window,
     private val snake: Snake,
     private val fruit: Fruit,
     private val keyboard: KeyboardWatcher,
-    private val onQuit: () -> Unit
+    private val onQuit: () -> Unit,
+    private val logic: GameLogic,
+    private val state: CurrentState
 ) {
 
     private var timer: Timer? = null
-    private var timeStarted = LocalDateTime.now()
-    private var fruitsEatenCount = 0
-    private var directionsChangedCount = 0
 
     fun restart() {
         resetState()
         timer = Timer(true).also { currentTimer ->
             currentTimer.scheduleAtFixedRate(GameTimerTask({
-                onTick()
+                val result = logic.onTick()
+                if (result is TickResult.Died) {
+                    gameOver(result.message)
+                }
             }, { e ->
-                e.printStackTrace()
                 currentTimer.cancel()
+                e.printStackTrace()
                 JOptionPane.showMessageDialog(
                     window, "${e.javaClass.simpleName}: ${e.message}", "Exception thrown!", JOptionPane.ERROR_MESSAGE
                 )
@@ -51,9 +50,7 @@ class GameEngine(
 
     private fun resetState() {
         stop()
-        timeStarted = LocalDateTime.now()
-        fruitsEatenCount = 0
-        directionsChangedCount = 0
+        state.reset()
         keyboard.collectedDirections.clear()
         snake.head = matrix.cellAt(1, 1)
         snake.direction = Direction.RIGHT
@@ -66,6 +63,7 @@ class GameEngine(
         private val onException: (Exception) -> Unit
     ) : TimerTask() {
         override fun run() {
+            // TODO do calculations on Timer thread, and only board.repaint on UI thread
             if (!EventQueue.isDispatchThread()) {
                 EventQueue.invokeLater(this)
             } else {
@@ -78,57 +76,14 @@ class GameEngine(
         }
     }
 
-    private fun onTick() {
-        checkDirection()
-        if (checkSnakeHit()) {
-            return
-        }
-        checkFruitEaten()
-        moveSnake()
-        board.repaint()
-    }
-
-    private fun checkDirection() {
-        if (keyboard.collectedDirections.isEmpty()) {
-            return
-        }
-        val newDirection = keyboard.collectedDirections.removeFirst()
-        if (!newDirection.isNextTo(snake.direction)) {
-            checkDirection()
-            return
-        }
-        if (snake.direction == newDirection) {
-            checkDirection()
-            return
-        }
-        directionsChangedCount++
-        snake.direction = newDirection
-    }
-
-    private fun checkSnakeHit(): Boolean {
-        val newSnakeHeadPos = snake.calculateNewHeadPosition()
-        Log.debug { "New snake head position will be: $newSnakeHeadPos" }
-        if (!matrix.cellExists(newSnakeHeadPos)) {
-            gameOver("You ran into the wall.")
-            return true
-        }
-        val newSnakeHeadCell = matrix.cellAt(newSnakeHeadPos)
-        if (snake.body.contains(newSnakeHeadCell)) {
-            gameOver("You ran into yourself.")
-            return true
-        }
-        return false
-    }
-
     private fun gameOver(detailMessage: String) {
         timer!!.cancel()
-        val secondsPlayed = Duration.between(timeStarted, LocalDateTime.now()).seconds
+        val secondsPlayed = Duration.between(state.timeStarted, LocalDateTime.now()).seconds
         val result = JOptionPane.showOptionDialog(
             window,
             "$detailMessage\n" +
-                "Fruits eaten: $fruitsEatenCount\n" +
-                "Time survived: ${formatTime(secondsPlayed)}\n" +
-                "Direction changes needed: $directionsChangedCount"
+                "Fruits eaten: ${state.fruitsEatenCount}\n" +
+                "Time survived: ${formatTime(secondsPlayed)}"
             , "Game over!",
             JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
             arrayOf("Quit", "Restart"), "Restart"
@@ -140,37 +95,6 @@ class GameEngine(
     }
 
     private fun formatTime(seconds: Long) =
-        "${if (seconds >= 60) "${seconds / 60}min " else "" }${seconds % 60}sec"
-
-    private fun checkFruitEaten() {
-        val newPos = snake.calculateNewHeadPosition()
-        if (fruit.position.xy == newPos) {
-            Log.debug { "Fruit eaten at: $newPos" }
-            fruitsEatenCount++
-            snake.growBody += Config.bodyGrowFactorOnFruitEaten
-            fruit.position = nextFruitPosition()
-        }
-    }
-
-    private fun nextFruitPosition(): Cell {
-        var newPosition = matrix.randomCell()
-        while (snake.contains(newPosition) || fruit.position == newPosition) {
-            newPosition = matrix.randomCell()
-        }
-        return newPosition
-    }
-
-    private fun moveSnake() {
-        if (snake.growBody == 0) {
-            snake.removeLast()
-        } else {
-            snake.growBody--
-        }
-
-        val newPos = snake.calculateNewHeadPosition()
-        snake.body.add(0, snake.head)
-        val newHead = matrix.cellAt(newPos)
-        snake.head = newHead
-    }
+        "${if (seconds >= 60) "${seconds / 60}min " else ""}${seconds % 60}sec"
 
 }

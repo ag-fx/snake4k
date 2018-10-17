@@ -8,6 +8,6 @@ object Config {
     val countCols = 25
     val countRows = 20
 
-    val logEnabled = true
+    val logEnabled = System.getProperty("snake4k.log") != null
 
 }

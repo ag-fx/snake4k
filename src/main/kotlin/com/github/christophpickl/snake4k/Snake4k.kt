@@ -16,7 +16,9 @@ object Snake4k {
     private val window: Window
     private val snake: Snake
     private val fruit: Fruit
-    private val game: GameEngine
+    private val engine: GameEngine
+    private val logic: GameLogic
+    private val state = CurrentState()
 
     init {
         val dummyCell = matrix.cellAt(0, 0)
@@ -31,7 +33,8 @@ object Snake4k {
             }
         })
         window.addKeyListener(keyboard)
-        game = GameEngine(matrix, board, window, snake, fruit, keyboard, ::quit)
+        logic = GameLogic(keyboard, matrix, board, snake, fruit, state)
+        engine = GameEngine(matrix, window, snake, fruit, keyboard, ::quit, logic, state)
     }
 
     @JvmStatic
@@ -41,12 +44,12 @@ object Snake4k {
     }
 
     private fun restartGame() {
-        game.restart()
+        engine.restart()
     }
 
     private fun quit() {
         Log.debug { "Quit application ..." }
-        game.stop()
+        engine.stop()
         window.isVisible = false
         window.dispose()
     }
