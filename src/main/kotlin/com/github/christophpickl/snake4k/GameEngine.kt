@@ -2,6 +2,7 @@ package com.github.christophpickl.snake4k
 
 import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.CurrentState
+import com.github.christophpickl.snake4k.view.ExceptionEvent
 import com.github.christophpickl.snake4k.view.GameOverEvent
 import com.google.common.eventbus.EventBus
 import java.awt.EventQueue
@@ -10,7 +11,6 @@ import java.time.LocalDateTime
 import java.util.Timer
 import java.util.TimerTask
 import javax.inject.Inject
-import javax.swing.JOptionPane
 
 class GameEngine @Inject constructor(
     private val logic: GameLogic,
@@ -33,9 +33,7 @@ class GameEngine @Inject constructor(
             }, { e ->
                 currentTimer.cancel()
                 e.printStackTrace()
-                JOptionPane.showMessageDialog(
-                    null, "${e.javaClass.simpleName}: ${e.message}", "Exception thrown!", JOptionPane.ERROR_MESSAGE
-                )
+                bus.post(ExceptionEvent(e))
             }), 0L, Config.tickTimeMs)
         }
     }

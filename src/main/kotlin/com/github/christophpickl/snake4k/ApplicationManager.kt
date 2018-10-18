@@ -20,11 +20,6 @@ class ApplicationManager @Inject constructor(
 
     fun start() {
         Log.debug { "start()" }
-//        window.addWindowListener(object : WindowAdapter() {
-//            override fun windowClosing(e: WindowEvent) {
-//                onQuitEvent()
-//            }
-//        })
         onRestartEvent()
     }
 

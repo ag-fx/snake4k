@@ -5,6 +5,8 @@ import com.github.christophpickl.snake4k.board.Matrix
 import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
+import javafx.scene.canvas.Canvas
+import javafx.scene.paint.Color
 import java.awt.Dimension
 import javax.inject.Inject
 
@@ -20,15 +22,15 @@ class Board @Inject constructor(
     private val matrix: Matrix,
     private val snake: Snake,
     private val fruit: Fruit
-) : javafx.scene.canvas.Canvas(
-    boardSize.width + 14.0,
-    boardSize.height + 57.0
+) : Canvas(
+    boardSize.width.toDouble(),
+    boardSize.height.toDouble()
 ) {
 
-    private val defaultColor = javafx.scene.paint.Color.rgb(205, 220, 220)
-    private val snakeBodyColor = javafx.scene.paint.Color.rgb(225, 225, 60)
-    private val snakeHeadColor = javafx.scene.paint.Color.rgb(205, 205, 60)
-    private val fruitColor = javafx.scene.paint.Color.rgb(205, 85, 65)
+    private val defaultColor = Color.rgb(205, 220, 220)
+    private val snakeBodyColor = Color.rgb(225, 225, 60)
+    private val snakeHeadColor = Color.rgb(205, 205, 60)
+    private val fruitColor = Color.rgb(205, 85, 65)
 
     init {
         repaint()

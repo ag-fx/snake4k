@@ -32,7 +32,7 @@ class Matrix {
     }
 
     fun cellExists(xy: Pair<Int, Int>) =
-        xy.first in 0..(countCols-1) && xy.second in 0..(countRows-1)
+        xy.first in 0..(countCols - 1) && xy.second in 0..(countRows - 1)
 
     fun randomCell() = cellAt(
         random.nextInt(Config.countCols),

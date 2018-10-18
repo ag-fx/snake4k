@@ -22,4 +22,10 @@ class FxBridge : Controller() {
     fun onGameOverEvent(event: GameOverEvent) {
         fire(event)
     }
+
+    @Subscribe
+    fun onExceptionEvent(event: ExceptionEvent) {
+        fire(event)
+    }
+
 }

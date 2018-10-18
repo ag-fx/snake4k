@@ -32,6 +32,17 @@ class MainController : Controller() {
             )
 //            }
         }
+        subscribe<ExceptionEvent> {
+            val e = it.exception
+            alert(
+                type = Alert.AlertType.ERROR,
+                owner = primaryStage,
+                title = "",
+                header = "Unhandled Exception!",
+                content = "${e.javaClass.simpleName}: ${e.message}",
+                buttons = *arrayOf(ButtonType.OK)
+            )
+        }
     }
 
     private fun formatTime(seconds: Int) =

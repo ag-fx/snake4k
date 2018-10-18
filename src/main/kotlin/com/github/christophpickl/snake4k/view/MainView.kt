@@ -4,6 +4,7 @@ import javafx.scene.control.MenuBar
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCodeCombination
 import javafx.scene.input.KeyCombination
+import javafx.scene.input.KeyEvent
 import tornadofx.*
 
 class MainView : View() {
@@ -12,7 +13,7 @@ class MainView : View() {
 
     override val root = borderpane {
         title = "Snake4k"
-        addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, keyboard)
+        addEventFilter(KeyEvent.KEY_PRESSED, keyboard)
 
         paddingAll = 0
         top {
