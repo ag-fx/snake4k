@@ -18,23 +18,26 @@ class Snake {
     fun contains(cell: Cell) = head == cell || body.contains(cell)
 
     fun move(cellProvider: (Pair<Int, Int>) -> Cell) {
+        var willAddBody = false
         if (growBody == 0) {
-            removeLast()
+            if (body.isNotEmpty()) {
+                willAddBody = true
+                body.removeLast()
+            }
         } else {
+            willAddBody = true
             growBody--
         }
-        body.add(0, head)
+        if (willAddBody) {
+            body.add(0, head)
+        }
 
         val newPos = calculateNewHeadPosition()
         val newHead = cellProvider(newPos)
         head = newHead
     }
 
-    private fun removeLast() {
-        if (body.isEmpty()) {
-            return
-        }
-        body.removeAt(body.size - 1)
+    private fun ArrayList<*>.removeLast() {
+        removeAt(size - 1)
     }
-
 }

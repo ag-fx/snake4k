@@ -36,6 +36,7 @@ class GameLogic @Inject constructor(
         snake.head = matrix.cellAt(1, 1)
         snake.direction = Direction.RIGHT
         snake.body.clear()
+        snake.body.add(matrix.cellAt(0, 1))
         fruit.position = matrix.randomCell()
     }
 
