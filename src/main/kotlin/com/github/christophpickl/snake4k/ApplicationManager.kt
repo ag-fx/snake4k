@@ -1,33 +1,34 @@
 package com.github.christophpickl.snake4k
 
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
-import com.github.christophpickl.snake4k.view.Window
+import com.github.christophpickl.snake4k.view.QuitEvent
+import com.github.christophpickl.snake4k.view.RestartEvent
 import com.google.common.eventbus.DeadEvent
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
-import java.awt.event.WindowAdapter
-import java.awt.event.WindowEvent
+import javafx.application.Platform
 import javax.inject.Inject
 
-class GameManager @Inject constructor(
-    private val window: Window,
+class ApplicationManager @Inject constructor(
+//    private val window: Window,
     private val keyboard: KeyboardWatcher,
     private val engine: GameEngine,
     bus: EventBus
 ) {
 
     init {
+        println("Register game manager to: $bus")
         bus.register(this)
     }
 
     fun start() {
-        window.addWindowListener(object : WindowAdapter() {
-            override fun windowClosing(e: WindowEvent) {
-                onQuitEvent()
-            }
-        })
-        window.addKeyListener(keyboard)
-        window.isVisible = true
+//        window.addWindowListener(object : WindowAdapter() {
+//            override fun windowClosing(e: WindowEvent) {
+//                onQuitEvent()
+//            }
+//        })
+//        window.addKeyListener(keyboard)
+//        window.isVisible = true
         onRestartEvent()
     }
 
@@ -43,8 +44,7 @@ class GameManager @Inject constructor(
     fun onQuitEvent(event: QuitEvent = QuitEvent) {
         Log.debug { "Quit application ..." }
         engine.stop()
-        window.isVisible = false
-        window.dispose()
+        Platform.exit()
     }
 
     @Suppress("UNUSED_PARAMETER")
@@ -54,6 +54,3 @@ class GameManager @Inject constructor(
     }
 
 }
-
-object RestartEvent
-object QuitEvent

@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     application
     kotlin("jvm") version "1.2.71"
@@ -6,6 +8,7 @@ plugins {
 dependencies {
     compile(kotlin("stdlib"))
     implementation("com.google.inject:guice:4.2.1")
+    implementation("no.tornado:tornadofx:1.7.17")
 }
 
 repositories {
@@ -15,6 +18,13 @@ repositories {
 application {
     mainClassName = "com.github.christophpickl.snake4k.Snake4k"
 }
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions.jvmTarget = "1.8"
+}
+
+// DISTRIBUTION
+// =====================================================================================================================
 
 val fatJar = task("fatJar", type = Jar::class) {
     baseName = "${project.name}-fat"

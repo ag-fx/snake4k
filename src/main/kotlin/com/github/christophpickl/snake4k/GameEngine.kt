@@ -2,7 +2,8 @@ package com.github.christophpickl.snake4k
 
 import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.CurrentState
-import com.github.christophpickl.snake4k.view.Window
+import com.github.christophpickl.snake4k.view.QuitEvent
+import com.github.christophpickl.snake4k.view.RestartEvent
 import com.google.common.eventbus.EventBus
 import java.awt.EventQueue
 import java.time.Duration
@@ -13,7 +14,6 @@ import javax.inject.Inject
 import javax.swing.JOptionPane
 
 class GameEngine @Inject constructor(
-    private val window: Window,
     private val logic: GameLogic,
     private val state: CurrentState,
     private val bus: EventBus
@@ -35,13 +35,14 @@ class GameEngine @Inject constructor(
                 currentTimer.cancel()
                 e.printStackTrace()
                 JOptionPane.showMessageDialog(
-                    window, "${e.javaClass.simpleName}: ${e.message}", "Exception thrown!", JOptionPane.ERROR_MESSAGE
+                    null, "${e.javaClass.simpleName}: ${e.message}", "Exception thrown!", JOptionPane.ERROR_MESSAGE
                 )
             }), 0L, Config.tickTimeMs)
         }
     }
 
     fun stop() {
+        Log.debug { "stop engine." }
         timer?.cancel()
     }
 
@@ -68,7 +69,7 @@ class GameEngine @Inject constructor(
         timer!!.cancel()
         val secondsPlayed = Duration.between(state.timeStarted, LocalDateTime.now()).seconds
         val result = JOptionPane.showOptionDialog(
-            window,
+            null,
             "$detailMessage\n" +
                 "Fruits eaten: ${state.fruitsEatenCount}\n" +
                 "Time survived: ${formatTime(secondsPlayed)}"
