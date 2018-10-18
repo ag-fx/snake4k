@@ -7,18 +7,29 @@ import javafx.scene.input.KeyCombination
 import tornadofx.*
 
 class MainView : View() {
+    private val board: Board by di()
+    private val keyboard: KeyboardWatcher by di()
+
     override val root = borderpane {
+        title = "Snake4k"
+        addEventFilter(javafx.scene.input.KeyEvent.KEY_PRESSED, keyboard)
+
+        paddingAll = 0
         top {
             add(MyMenuBar(this@MainView))
         }
+        center {
+            add(board)
+        }
         bottom {
-            label("Haha")
+            label("Fruits eaten: ") // FIXME bind to model
         }
     }
-}
 
-class MainController : Controller() {
-
+    override fun onDock() {
+        // otherwise keyboard listener won't work
+        root.requestFocus()
+    }
 }
 
 class MyMenuBar(

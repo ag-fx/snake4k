@@ -2,8 +2,7 @@ package com.github.christophpickl.snake4k
 
 import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.CurrentState
-import com.github.christophpickl.snake4k.view.QuitEvent
-import com.github.christophpickl.snake4k.view.RestartEvent
+import com.github.christophpickl.snake4k.view.GameOverEvent
 import com.google.common.eventbus.EventBus
 import java.awt.EventQueue
 import java.time.Duration
@@ -68,22 +67,12 @@ class GameEngine @Inject constructor(
         Log.debug { "Game over: $detailMessage" }
         timer!!.cancel()
         val secondsPlayed = Duration.between(state.timeStarted, LocalDateTime.now()).seconds
-        val result = JOptionPane.showOptionDialog(
-            null,
-            "$detailMessage\n" +
-                "Fruits eaten: ${state.fruitsEatenCount}\n" +
-                "Time survived: ${formatTime(secondsPlayed)}"
-            , "Game over!",
-            JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null,
-            arrayOf("Quit", "Restart"), "Restart"
-        )
-        when (result) {
-            0 -> bus.post(QuitEvent)
-            1 -> bus.post(RestartEvent)
-        }
-    }
 
-    private fun formatTime(seconds: Long) =
-        "${if (seconds >= 60) "${seconds / 60}min " else ""}${seconds % 60}sec"
+        bus.post(GameOverEvent(
+            detailMessage = detailMessage,
+            fruitsEaten = state.fruitsEatenCount,
+            secondsPlayed = secondsPlayed.toInt()
+        ))
+    }
 
 }

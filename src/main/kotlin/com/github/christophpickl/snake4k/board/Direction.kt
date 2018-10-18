@@ -1,16 +1,16 @@
 package com.github.christophpickl.snake4k.board
 
-import java.awt.event.KeyEvent
+import javafx.scene.input.KeyCode
 
 enum class Direction(
-    val keyCode: Int,
+    val keyCode: KeyCode,
     val coordinatesChange: Pair<Int, Int>
 ) {
 
-    UP(KeyEvent.VK_UP, 0 to -1),
-    DOWN(KeyEvent.VK_DOWN, 0 to 1),
-    LEFT(KeyEvent.VK_LEFT, -1 to 0),
-    RIGHT(KeyEvent.VK_RIGHT, 1 to 0);
+    UP(KeyCode.UP, 0 to -1),
+    DOWN(KeyCode.DOWN, 0 to 1),
+    LEFT(KeyCode.LEFT, -1 to 0),
+    RIGHT(KeyCode.RIGHT, 1 to 0);
 
     private val neighbours by lazy {
         when (this) {
@@ -28,6 +28,6 @@ enum class Direction(
             values().associateBy { it.keyCode }
         }
 
-        fun byKeyCode(keyCode: Int) = directionsByKeyCode[keyCode]
+        fun byKeyCode(keyCode: KeyCode) = directionsByKeyCode[keyCode]
     }
 }

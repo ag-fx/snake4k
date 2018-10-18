@@ -5,47 +5,48 @@ import com.github.christophpickl.snake4k.board.Matrix
 import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
-import java.awt.Color
 import java.awt.Dimension
-import java.awt.Graphics
 import javax.inject.Inject
-import javax.swing.JPanel
+
+private val sizeEachCell = 20
+private val sizeEachCellToDouble = sizeEachCell.toDouble()
+private val gapCells = 2
+private val boardSize = Dimension(
+    Config.countCols * sizeEachCell + ((Config.countCols - 1) * gapCells),
+    Config.countRows * sizeEachCell + ((Config.countRows - 1) * gapCells)
+)
 
 class Board @Inject constructor(
     private val matrix: Matrix,
     private val snake: Snake,
     private val fruit: Fruit
-) : JPanel() {
+) : javafx.scene.canvas.Canvas(
+    boardSize.width + 14.0,
+    boardSize.height + 57.0
+) {
+
+    private val defaultColor = javafx.scene.paint.Color.rgb(205, 220, 220)
+    private val snakeBodyColor = javafx.scene.paint.Color.rgb(225, 225, 60)
+    private val snakeHeadColor = javafx.scene.paint.Color.rgb(205, 205, 60)
+    private val fruitColor = javafx.scene.paint.Color.rgb(205, 85, 65)
 
     init {
-        background = Color.WHITE
+        repaint()
     }
 
-    private val sizeEachCell = 20
-    private val gapCells = 2
-
-    val boardSize = Dimension(
-        Config.countCols * sizeEachCell + ((Config.countCols - 1) * gapCells),
-        Config.countRows * sizeEachCell + ((Config.countRows - 1) * gapCells)
-    )
-
-    private val defaultColor = Color(205, 220, 220)
-    private val snakeBodyColor = Color(225, 225, 60)
-    private val snakeHeadColor = Color(205, 205, 60)
-    private val fruitColor = Color(205, 85, 65)
-
-    override fun paint(g: Graphics) {
+    fun repaint() {
+        val g = graphicsContext2D
         matrix.forEach { cell ->
-            g.color = when {
+            g.fill = when {
                 snake.body.contains(cell) -> snakeBodyColor
                 snake.head == cell -> snakeHeadColor
                 fruit.position == cell -> fruitColor
                 else -> defaultColor
             }
             g.fillRect(
-                sizeEachCell * cell.x + gapCells * cell.x,
-                sizeEachCell * cell.y + gapCells * cell.y,
-                sizeEachCell, sizeEachCell
+                (sizeEachCell * cell.x + gapCells * cell.x).toDouble(),
+                (sizeEachCell * cell.y + gapCells * cell.y).toDouble(),
+                sizeEachCellToDouble, sizeEachCellToDouble
             )
         }
     }

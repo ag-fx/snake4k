@@ -1,6 +1,5 @@
 package com.github.christophpickl.snake4k
 
-import com.github.christophpickl.snake4k.view.KeyboardWatcher
 import com.github.christophpickl.snake4k.view.QuitEvent
 import com.github.christophpickl.snake4k.view.RestartEvent
 import com.google.common.eventbus.DeadEvent
@@ -10,8 +9,6 @@ import javafx.application.Platform
 import javax.inject.Inject
 
 class ApplicationManager @Inject constructor(
-//    private val window: Window,
-    private val keyboard: KeyboardWatcher,
     private val engine: GameEngine,
     bus: EventBus
 ) {
@@ -22,13 +19,12 @@ class ApplicationManager @Inject constructor(
     }
 
     fun start() {
+        Log.debug { "start()" }
 //        window.addWindowListener(object : WindowAdapter() {
 //            override fun windowClosing(e: WindowEvent) {
 //                onQuitEvent()
 //            }
 //        })
-//        window.addKeyListener(keyboard)
-//        window.isVisible = true
         onRestartEvent()
     }
 
