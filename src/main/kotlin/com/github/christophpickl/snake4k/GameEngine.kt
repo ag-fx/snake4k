@@ -5,6 +5,7 @@ import com.github.christophpickl.snake4k.model.CurrentState
 import com.github.christophpickl.snake4k.view.ExceptionEvent
 import com.github.christophpickl.snake4k.view.GameOverEvent
 import com.google.common.eventbus.EventBus
+import mu.KotlinLogging
 import java.awt.EventQueue
 import java.time.Duration
 import java.time.LocalDateTime
@@ -18,6 +19,7 @@ class GameEngine @Inject constructor(
     private val bus: EventBus
 ) {
 
+    private val log = KotlinLogging.logger {}
     private var timer: Timer? = null
 
     fun restart() {
@@ -39,7 +41,7 @@ class GameEngine @Inject constructor(
     }
 
     fun stop() {
-        Log.debug { "stop engine." }
+        log.info { "stop engine" }
         timer?.cancel()
     }
 
@@ -62,7 +64,7 @@ class GameEngine @Inject constructor(
     }
 
     private fun gameOver(detailMessage: String) {
-        Log.debug { "Game over: $detailMessage" }
+        log.info { "Game over: $detailMessage" }
         timer!!.cancel()
         val secondsPlayed = Duration.between(state.timeStarted, LocalDateTime.now()).seconds
 

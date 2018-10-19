@@ -8,6 +8,7 @@ import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.view.Board
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
+import mu.KotlinLogging
 import javax.inject.Inject
 
 class GameLogic @Inject constructor(
@@ -18,6 +19,7 @@ class GameLogic @Inject constructor(
     private val fruit: Fruit,
     private val state: CurrentState
 ) {
+    private val log = KotlinLogging.logger {}
 
     fun onTick(): TickResult {
         checkDirection()
@@ -59,7 +61,7 @@ class GameLogic @Inject constructor(
 
     private fun checkSnakeHit(): TickResult.Died? {
         val newSnakeHeadPos = snake.calculateNewHeadPosition()
-//        Log.debug { "New snake head position: $newSnakeHeadPos" }
+        log.trace { "New snake head position: $newSnakeHeadPos" }
         if (!matrix.cellExists(newSnakeHeadPos)) {
             return TickResult.Died("You ran into the wall.")
         }
@@ -73,7 +75,7 @@ class GameLogic @Inject constructor(
     private fun checkFruitEaten() {
         val newPos = snake.calculateNewHeadPosition()
         if (fruit.position.xy == newPos) {
-            Log.debug { "Fruit eaten at: $newPos" }
+            log.debug { "Fruit eaten at: $newPos" }
             state.fruitsEatenCount++
             snake.growBody += Config.bodyGrowFactorOnFruitEaten
             fruit.position = board.nextFruitPosition()

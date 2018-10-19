@@ -5,6 +5,7 @@ import com.github.christophpickl.snake4k.view.MainController
 import com.github.christophpickl.snake4k.view.MainView
 import com.google.inject.Guice
 import javafx.stage.Stage
+import mu.KotlinLogging
 import tornadofx.*
 import kotlin.reflect.KClass
 
@@ -12,6 +13,8 @@ class Snake4kFxApp : App(
     primaryView = MainView::class,
     stylesheet = InternalWindow.Styles::class
 ) {
+
+    private val log = KotlinLogging.logger {}
     private val appManager: ApplicationManager
 
     init {
@@ -24,11 +27,12 @@ class Snake4kFxApp : App(
     }
 
     override fun start(stage: Stage) {
-        println("start()")
+        log.debug { "start()" }
         super.start(stage)
         //    defaultCloseOperation = WindowConstants.DO_NOTHING_ON_CLOSE
         //    setLocationRelativeTo(null)
         stage.setOnCloseRequest {
+            // TODO handle close properly (macosx CMD+Q does a "hard quit")
             println("stage.setOnCloseRequest {}")
         }
 

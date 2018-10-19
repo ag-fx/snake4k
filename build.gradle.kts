@@ -9,6 +9,8 @@ dependencies {
     compile(kotlin("stdlib"))
     implementation("com.google.inject:guice:4.2.1")
     implementation("no.tornado:tornadofx:1.7.17")
+    implementation("io.github.microutils:kotlin-logging:1.6.10")
+    implementation("ch.qos.logback:logback-classic:1.2.3")
 }
 
 repositories {

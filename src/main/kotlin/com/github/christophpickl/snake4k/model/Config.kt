@@ -11,9 +11,6 @@ object Config {
     val countCols = 25
     val countRows = 20
 
-    val logEnabled = System.getProperty("snake4k.log") != null
-
-
     val boardColor = Color.rgb(200, 220, 220)
     val snakeBodyColor = Color.rgb(50, 200, 50)
     val snakeHeadColor = Color.rgb(50, 150, 50)

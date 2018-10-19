@@ -6,6 +6,7 @@ import com.google.common.eventbus.DeadEvent
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import javafx.application.Platform
+import mu.KotlinLogging
 import javax.inject.Inject
 
 class ApplicationManager @Inject constructor(
@@ -13,35 +14,35 @@ class ApplicationManager @Inject constructor(
     bus: EventBus
 ) {
 
+    private val log = KotlinLogging.logger {}
+
     init {
-        println("Register game manager to: $bus")
         bus.register(this)
     }
 
     fun start() {
-        Log.debug { "start()" }
+        log.debug { "Start game." }
         onRestartEvent()
     }
 
     @Suppress("UNUSED_PARAMETER")
     @Subscribe
     fun onRestartEvent(event: RestartEvent = RestartEvent) {
-        Log.debug { "Restart game." }
+        log.debug { "Received restart event." }
         engine.restart()
     }
 
     @Suppress("UNUSED_PARAMETER")
     @Subscribe
     fun onQuitEvent(event: QuitEvent = QuitEvent) {
-        Log.debug { "Quit application ..." }
+        log.debug { "Received quit event." }
         engine.stop()
         Platform.exit()
     }
 
-    @Suppress("UNUSED_PARAMETER")
     @Subscribe
     fun onDeadEvent(event: DeadEvent) {
-        Log.debug { "Warning: Unused event found: $event" }
+        log.warn { "Unhandled event received: $event" }
     }
 
 }

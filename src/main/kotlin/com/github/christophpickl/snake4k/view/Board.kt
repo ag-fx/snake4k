@@ -1,6 +1,5 @@
 package com.github.christophpickl.snake4k.view
 
-import com.github.christophpickl.snake4k.Log
 import com.github.christophpickl.snake4k.board.Cell
 import com.github.christophpickl.snake4k.board.Direction
 import com.github.christophpickl.snake4k.board.Matrix
@@ -10,6 +9,7 @@ import com.github.christophpickl.snake4k.model.Snake
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
+import mu.KotlinLogging
 import javax.inject.Inject
 
 class Board @Inject constructor(
@@ -20,6 +20,7 @@ class Board @Inject constructor(
     Config.boardSize.width.toDouble(),
     Config.boardSize.height.toDouble()
 ) {
+    private val log = KotlinLogging.logger {}
 
     init {
         repaint()
@@ -50,7 +51,7 @@ class Board @Inject constructor(
         }.first {
             !snake.contains(it) && fruit.position != it
         }.apply {
-            Log.debug { "Next fruit position: $this" }
+            log.debug { "Next fruit position: $this" }
         }
 
     private fun Cell.isOwnedBySnake() = snake.body.contains(this) || snake.head == this
