@@ -69,6 +69,13 @@ class MainController : Controller() {
                 buttons = *arrayOf(ButtonType.OK)
             )
         }
+
+        state.fruitsEatenProperty.addListener { _, _, newValue ->
+            val newVal = newValue.toInt()
+            if (newVal > state.highscore) {
+                state.highscore = newVal
+            }
+        }
     }
 
 

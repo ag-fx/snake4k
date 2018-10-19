@@ -27,6 +27,9 @@ class MainView : View() {
             hbox {
                 label("Fruits eaten: ")
                 label { bind(stateModel.fruitsEaten) }
+
+                label(" Highscore: ")
+                label { bind(stateModel.highscore) }
             }
         }
     }

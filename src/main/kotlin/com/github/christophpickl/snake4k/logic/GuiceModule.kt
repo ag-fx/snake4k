@@ -19,6 +19,7 @@ class GuiceModule : AbstractModule() {
     override fun configure() {
         bind(EventBus::class.java).toInstance(EventBus())
         bind(ApplicationManager::class.java).asEagerSingleton()
+        bind(StorageService::class.java).asEagerSingleton()
 
         bind(State::class.java).asEagerSingleton()
         bind(Settings::class.java).asEagerSingleton()

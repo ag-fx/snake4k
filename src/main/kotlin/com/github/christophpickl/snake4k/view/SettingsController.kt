@@ -26,7 +26,7 @@ class SettingsController : Controller() {
     private fun showAndRun() {
         logg.debug { "show and run" }
         Platform.runLater {
-            settingsView.showAndWait()
+            settingsView.showAndWait() // TODO if hit CMD+Q here, it will fail with an exception
             appManager.start()
         }
     }

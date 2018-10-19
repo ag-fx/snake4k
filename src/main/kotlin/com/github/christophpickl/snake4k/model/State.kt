@@ -9,6 +9,9 @@ class State {
     val fruitsEatenProperty = SimpleIntegerProperty(this, "fruitsEaten", 0)
     var fruitsEaten by fruitsEatenProperty
 
+    val highscoreProperty = SimpleIntegerProperty(this, "highscore", -1)
+    var highscore by highscoreProperty
+
     var directionsChanged = 0
     var timeStarted = LocalDateTime.now()!!
 
@@ -26,6 +29,7 @@ class State {
 class StateModel(state: State) : ViewModel() {
     val gameState = bind(propertyProducer = state::gameStateProperty)
     val fruitsEaten = bind(propertyProducer = state::fruitsEatenProperty)
+    val highscore = bind(propertyProducer = state::highscoreProperty)
 }
 
 enum class GameState {
