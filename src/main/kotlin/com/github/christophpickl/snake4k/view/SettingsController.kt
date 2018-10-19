@@ -21,13 +21,18 @@ class SettingsController : Controller() {
         subscribe<RestartFxEvent> {
             showAndRun()
         }
+        subscribe<QuitEvent> {
+            settingsView.close()
+        }
+        settingsView.setOnCloseRequest {
+            appManager.start()
+        }
     }
 
     private fun showAndRun() {
-        logg.debug { "show and run" }
+        logg.debug { "show settings" }
         Platform.runLater {
-            settingsView.showAndWait() // TODO if hit CMD+Q here, it will fail with an exception
-            appManager.start()
+            settingsView.show()
         }
     }
 
