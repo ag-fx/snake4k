@@ -1,5 +1,11 @@
 package com.github.christophpickl.snake4k.view
 
+import com.github.christophpickl.snake4k.ExceptionEvent
+import com.github.christophpickl.snake4k.GameOverEvent
+import com.github.christophpickl.snake4k.PauseEvent
+import com.github.christophpickl.snake4k.QuitEvent
+import com.github.christophpickl.snake4k.RestartFxEvent
+import com.github.christophpickl.snake4k.RestartGuiceEvent
 import com.github.christophpickl.snake4k.model.GameState
 import com.github.christophpickl.snake4k.model.State
 import com.google.common.eventbus.EventBus

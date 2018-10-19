@@ -1,5 +1,10 @@
 package com.github.christophpickl.snake4k.view
 
+import com.github.christophpickl.snake4k.ExceptionEvent
+import com.github.christophpickl.snake4k.GameOverEvent
+import com.github.christophpickl.snake4k.QuitEvent
+import com.github.christophpickl.snake4k.RestartFxEvent
+import com.github.christophpickl.snake4k.RestartGuiceEvent
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import tornadofx.*

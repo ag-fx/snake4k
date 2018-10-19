@@ -1,10 +1,10 @@
 package com.github.christophpickl.snake4k.view.components
 
+import com.github.christophpickl.snake4k.PauseEvent
+import com.github.christophpickl.snake4k.QuitEvent
+import com.github.christophpickl.snake4k.RestartFxEvent
 import com.github.christophpickl.snake4k.model.GameState
 import com.github.christophpickl.snake4k.model.StateModel
-import com.github.christophpickl.snake4k.view.PauseEvent
-import com.github.christophpickl.snake4k.view.QuitEvent
-import com.github.christophpickl.snake4k.view.RestartFxEvent
 import javafx.scene.control.MenuBar
 import javafx.scene.input.KeyCode
 import javafx.scene.input.KeyCodeCombination

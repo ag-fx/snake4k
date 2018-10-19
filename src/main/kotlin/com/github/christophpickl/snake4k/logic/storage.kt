@@ -1,7 +1,7 @@
 package com.github.christophpickl.snake4k.logic
 
+import com.github.christophpickl.snake4k.GameOverEvent
 import com.github.christophpickl.snake4k.model.State
-import com.github.christophpickl.snake4k.view.GameOverEvent
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import mu.KotlinLogging

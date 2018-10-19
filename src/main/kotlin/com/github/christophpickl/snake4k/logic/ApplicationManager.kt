@@ -1,6 +1,6 @@
 package com.github.christophpickl.snake4k.logic
 
-import com.github.christophpickl.snake4k.view.QuitEvent
+import com.github.christophpickl.snake4k.QuitEvent
 import com.google.common.eventbus.DeadEvent
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe

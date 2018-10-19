@@ -1,5 +1,6 @@
 package com.github.christophpickl.snake4k.logic
 
+import com.github.christophpickl.snake4k.FruitEatenEvent
 import com.github.christophpickl.snake4k.board.Cell
 import com.github.christophpickl.snake4k.board.Direction
 import com.github.christophpickl.snake4k.board.Matrix
@@ -8,6 +9,7 @@ import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.model.State
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
+import com.google.common.eventbus.EventBus
 import javafx.application.Platform
 import mu.KotlinLogging
 import javax.inject.Inject
@@ -17,7 +19,8 @@ class GameLogic @Inject constructor(
     private val matrix: Matrix,
     private val snake: Snake,
     private val fruit: Fruit,
-    private val state: State
+    private val state: State,
+    private val bus: EventBus
 ) {
     private val log = KotlinLogging.logger {}
 
@@ -78,6 +81,7 @@ class GameLogic @Inject constructor(
             Platform.runLater { state.fruitsEaten++ }
             snake.growBody += Config.bodyGrowFactorOnFruitEaten
             fruit.position = nextFruitPosition()
+            bus.post(FruitEatenEvent)
         }
     }
 

@@ -1,5 +1,7 @@
 package com.github.christophpickl.snake4k.view
 
+import com.github.christophpickl.snake4k.ApplicationReadyEvent
+import com.github.christophpickl.snake4k.QuitEvent
 import com.github.christophpickl.snake4k.logic.ApplicationManager
 import com.github.christophpickl.snake4k.logic.GuiceModule
 import com.github.christophpickl.snake4k.view.components.MainView

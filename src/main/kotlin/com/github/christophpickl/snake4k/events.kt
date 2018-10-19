@@ -1,4 +1,4 @@
-package com.github.christophpickl.snake4k.view
+package com.github.christophpickl.snake4k
 
 import tornadofx.*
 
@@ -25,3 +25,5 @@ object QuitEvent : FXEvent()
 class ExceptionEvent(
     val exception: Exception
 ) : FXEvent()
+
+object FruitEatenEvent

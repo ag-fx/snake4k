@@ -28,8 +28,18 @@ class MainView : View() {
                 label("Fruits eaten: ")
                 label { bind(stateModel.fruitsEaten) }
 
-                label(" Highscore: ")
+                label(" - Highscore: ")
                 label { bind(stateModel.highscore) }
+                label(" - Sound: ")
+                checkbox {
+                    isSelected = state.enableSounds
+                    selectedProperty().addListener { _, _, isSoundEnabled ->
+                        state.enableSounds = isSoundEnabled
+                        // MINOR binding didnt work :-/
+//                        stateModel.enableSounds.value = isSoundEnabled
+//                        stateModel.commit()
+                    }
+                }
             }
         }
     }
