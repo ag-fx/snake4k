@@ -45,15 +45,6 @@ class Board @Inject constructor(
         }
     }
 
-    fun nextFruitPosition(): Cell =
-        generateSequence {
-            matrix.randomCell()
-        }.first {
-            !snake.contains(it) && fruit.position != it
-        }.apply {
-            log.debug { "Next fruit position: $this" }
-        }
-
     private fun Cell.isOwnedBySnake() = snake.body.contains(this) || snake.head == this
     private fun Cell.isOwnedByFruit() = this == fruit.position
 

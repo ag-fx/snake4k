@@ -1,12 +1,12 @@
 package com.github.christophpickl.snake4k.logic
 
+import com.github.christophpickl.snake4k.board.Cell
 import com.github.christophpickl.snake4k.board.Direction
 import com.github.christophpickl.snake4k.board.Matrix
 import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.model.State
-import com.github.christophpickl.snake4k.view.Board
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
 import javafx.application.Platform
 import mu.KotlinLogging
@@ -15,7 +15,6 @@ import javax.inject.Inject
 class GameLogic @Inject constructor(
     private val keyboard: KeyboardWatcher,
     private val matrix: Matrix,
-    private val board: Board,
     private val snake: Snake,
     private val fruit: Fruit,
     private val state: State
@@ -29,7 +28,6 @@ class GameLogic @Inject constructor(
         }
         checkFruitEaten()
         snake.move(matrix::cellAt)
-        board.repaint()
         return TickResult.Ok
     }
 
@@ -79,9 +77,18 @@ class GameLogic @Inject constructor(
             log.debug { "Fruit eaten at: $newPos" }
             Platform.runLater { state.fruitsEaten++ }
             snake.growBody += Config.bodyGrowFactorOnFruitEaten
-            fruit.position = board.nextFruitPosition()
+            fruit.position = nextFruitPosition()
         }
     }
+
+    private fun nextFruitPosition(): Cell =
+        generateSequence {
+            matrix.randomCell()
+        }.first {
+            !snake.contains(it) && fruit.position != it
+        }.apply {
+            log.debug { "Next fruit position: $this" }
+        }
 
 }
 

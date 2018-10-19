@@ -9,12 +9,12 @@ import javafx.scene.input.KeyCombination
 import tornadofx.*
 
 class MyMenuBar(
-    view: View, stateModel: StateModel
+    view: View,
+    stateModel: StateModel
 ) : MenuBar() {
     init {
         isUseSystemMenuBar = true
 
-        // TODO when dialog is open, these commands will still be triggered :-/
         menu("Application") {
             item(
                 name = "Restart",
