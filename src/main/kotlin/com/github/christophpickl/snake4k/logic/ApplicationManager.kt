@@ -45,4 +45,9 @@ class ApplicationManager @Inject constructor(
         log.warn { "Unhandled event received: $event" }
     }
 
+    @Subscribe
+    fun onAnyEvent(event: Any) {
+        log.info { "Event dispatched: $event" }
+    }
+
 }

@@ -3,11 +3,12 @@ package com.github.christophpickl.snake4k.logic
 import com.github.christophpickl.snake4k.board.Direction
 import com.github.christophpickl.snake4k.board.Matrix
 import com.github.christophpickl.snake4k.model.Config
-import com.github.christophpickl.snake4k.model.CurrentState
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
+import com.github.christophpickl.snake4k.model.State
 import com.github.christophpickl.snake4k.view.Board
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
+import javafx.application.Platform
 import mu.KotlinLogging
 import javax.inject.Inject
 
@@ -17,7 +18,7 @@ class GameLogic @Inject constructor(
     private val board: Board,
     private val snake: Snake,
     private val fruit: Fruit,
-    private val state: CurrentState
+    private val state: State
 ) {
     private val log = KotlinLogging.logger {}
 
@@ -33,7 +34,7 @@ class GameLogic @Inject constructor(
     }
 
     fun resetState() {
-        state.reset()
+        Platform.runLater { state.reset() }
         keyboard.collectedDirections.clear()
         snake.head = matrix.cellAt(1, 1)
         snake.direction = Direction.Right
@@ -55,7 +56,7 @@ class GameLogic @Inject constructor(
             checkDirection()
             return
         }
-        state.directionsChangedCount++
+        state.directionsChanged++
         snake.direction = newDirection
     }
 
@@ -76,7 +77,7 @@ class GameLogic @Inject constructor(
         val newPos = snake.calculateNewHeadPosition()
         if (fruit.position.xy == newPos) {
             log.debug { "Fruit eaten at: $newPos" }
-            state.fruitsEatenCount++
+            Platform.runLater { state.fruitsEaten++ }
             snake.growBody += Config.bodyGrowFactorOnFruitEaten
             fruit.position = board.nextFruitPosition()
         }

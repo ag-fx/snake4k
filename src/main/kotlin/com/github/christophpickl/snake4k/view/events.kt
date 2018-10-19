@@ -10,6 +10,7 @@ class GameOverEvent(
     val secondsPlayed: Int
 ) : FXEvent()
 
+object PauseEvent : FXEvent()
 object QuitEvent : FXEvent()
 
 class ExceptionEvent(

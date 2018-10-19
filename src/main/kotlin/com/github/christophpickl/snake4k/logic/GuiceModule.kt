@@ -1,9 +1,9 @@
 package com.github.christophpickl.snake4k.logic
 
 import com.github.christophpickl.snake4k.board.Matrix
-import com.github.christophpickl.snake4k.model.CurrentState
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
+import com.github.christophpickl.snake4k.model.State
 import com.github.christophpickl.snake4k.view.Board
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
 import com.google.common.eventbus.EventBus
@@ -14,7 +14,7 @@ class GuiceModule : AbstractModule() {
         bind(EventBus::class.java).toInstance(EventBus())
         bind(ApplicationManager::class.java).asEagerSingleton()
 
-        bind(CurrentState::class.java).asEagerSingleton()
+        bind(State::class.java).asEagerSingleton()
         bind(Snake::class.java).asEagerSingleton()
         bind(Fruit::class.java).asEagerSingleton()
 

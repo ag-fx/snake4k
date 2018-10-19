@@ -1,5 +1,7 @@
 package com.github.christophpickl.snake4k.view
 
+import com.github.christophpickl.snake4k.model.GameState
+import com.github.christophpickl.snake4k.model.State
 import com.google.common.eventbus.EventBus
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
@@ -9,16 +11,17 @@ class MainController : Controller() {
     // TODO mimick Swing behaviour of closing window
 
     private val bus: EventBus by di()
+    private val state: State by di()
 
     // TODO on quit getting "Not on FX application thread; currentThread = JavaFX Application Thread"
     init {
         subscribe<GameOverEvent> { event ->
             //            runAsync { } ui {
             alert(
-                type = Alert.AlertType.WARNING,
+                type = Alert.AlertType.INFORMATION,
                 owner = primaryStage,
                 title = "",
-                header = "Game over!",
+                header = "Game over",
                 content = "${event.detailMessage}\n" +
                     "Fruits eaten: ${event.fruitsEaten}\n" +
                     "Time survived: ${formatTime(event.secondsPlayed)}",
@@ -31,6 +34,12 @@ class MainController : Controller() {
                 }
             )
 //            }
+        }
+        subscribe<PauseEvent> {
+            if (state.gameState == GameState.NotRunning) {
+                throw IllegalStateException("Game not running, nothing to pause :(")
+            }
+            state.gameState = if (state.gameState == GameState.Running) GameState.Paused else GameState.Running
         }
         subscribe<ExceptionEvent> {
             val e = it.exception
@@ -46,6 +55,6 @@ class MainController : Controller() {
     }
 
     private fun formatTime(seconds: Int) =
-        "${if (seconds >= 60) "${seconds / 60}min " else ""}${seconds % 60}sec"
+        "${if (seconds >= 60) "${seconds / 60} Minutes " else ""}${seconds % 60} Second${if (seconds == 1) "" else "s"}"
 
 }
