@@ -28,11 +28,10 @@ class Snake4kFxApp : App(
     override fun start(stage: Stage) {
         log.debug { "Start UI" }
         super.start(stage)
-        //    defaultCloseOperation = WindowConstants.DO_NOTHING_ON_CLOSE
-        //    setLocationRelativeTo(null)
+
         stage.setOnCloseRequest {
-            // TODO handle close properly (macosx CMD+Q does a "hard quit")
-            println("stage.setOnCloseRequest {}")
+            it.consume() // disable macos' default CMD+Q
+            fire(QuitEvent)
         }
 
         appManager.start()

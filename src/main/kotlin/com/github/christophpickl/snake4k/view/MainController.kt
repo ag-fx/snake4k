@@ -8,32 +8,39 @@ import javafx.scene.control.ButtonType
 import tornadofx.*
 
 class MainController : Controller() {
-    // TODO mimick Swing behaviour of closing window
 
     private val bus: EventBus by di()
     private val state: State by di()
 
-    // TODO on quit getting "Not on FX application thread; currentThread = JavaFX Application Thread"
+    private var currentGameOverAlert: Alert? = null
+    private var currentExceptionAlert: Alert? = null
+
     init {
         subscribe<GameOverEvent> { event ->
-            //            runAsync { } ui {
-            alert(
+            currentGameOverAlert = buildAlert(
                 type = Alert.AlertType.INFORMATION,
                 owner = primaryStage,
-                title = "",
                 header = "Game over",
                 content = "${event.detailMessage}\n" +
                     "Fruits eaten: ${event.fruitsEaten}\n" +
                     "Time survived: ${formatTime(event.secondsPlayed)}",
-                buttons = *arrayOf(ButtonType("Restart"), ButtonType("Quit")),
-                actionFn = {
-                    when (it.text) {
+                buttons = *arrayOf(ButtonType("Restart"), ButtonType("Quit"))
+            )
+            currentGameOverAlert!!.let {
+                val buttonClicked = it.showAndWait()
+                if (buttonClicked.isPresent) {
+                    when (buttonClicked.get().text) {
                         "Restart" -> bus.post(RestartEvent)
                         "Quit" -> bus.post(QuitEvent)
                     }
                 }
-            )
-//            }
+            }
+        }
+        subscribe<RestartEvent> {
+            closeDialogs()
+        }
+        subscribe<QuitEvent> {
+            closeDialogs()
         }
         subscribe<PauseEvent> {
             if (state.gameState == GameState.NotRunning) {
@@ -43,7 +50,7 @@ class MainController : Controller() {
         }
         subscribe<ExceptionEvent> {
             val e = it.exception
-            alert(
+            currentExceptionAlert = buildAlert(
                 type = Alert.AlertType.ERROR,
                 owner = primaryStage,
                 title = "",
@@ -51,6 +58,13 @@ class MainController : Controller() {
                 content = "${e.javaClass.simpleName}: ${e.message}",
                 buttons = *arrayOf(ButtonType.OK)
             )
+        }
+    }
+
+    private fun closeDialogs() {
+        listOfNotNull(currentGameOverAlert, currentExceptionAlert).forEach {
+            it.result = ButtonType("Abort")
+            it.close()
         }
     }
 
