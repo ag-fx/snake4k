@@ -13,6 +13,7 @@ class State {
     var timeStarted = LocalDateTime.now()!!
 
     val gameStateProperty = SimpleObjectProperty(this, "gameState", GameState.NotRunning)
+    // TODO if paused, render overlay over board (dark greyish with big letters PAUSED)
     var gameState by gameStateProperty
 
     fun reset() {

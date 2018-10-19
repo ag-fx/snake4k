@@ -1,7 +1,6 @@
 package com.github.christophpickl.snake4k.logic
 
 import com.github.christophpickl.snake4k.view.QuitEvent
-import com.github.christophpickl.snake4k.view.RestartEvent
 import com.google.common.eventbus.DeadEvent
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
@@ -22,13 +21,6 @@ class ApplicationManager @Inject constructor(
 
     fun start() {
         log.debug { "Start game" }
-        onRestartEvent()
-    }
-
-    @Suppress("UNUSED_PARAMETER")
-    @Subscribe
-    fun onRestartEvent(event: RestartEvent = RestartEvent) {
-        log.debug { "Received restart event" }
         engine.restart()
     }
 

@@ -2,6 +2,7 @@ package com.github.christophpickl.snake4k.logic
 
 import com.github.christophpickl.snake4k.board.Matrix
 import com.github.christophpickl.snake4k.model.Fruit
+import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.model.State
 import com.github.christophpickl.snake4k.view.Board
@@ -15,6 +16,7 @@ class GuiceModule : AbstractModule() {
         bind(ApplicationManager::class.java).asEagerSingleton()
 
         bind(State::class.java).asEagerSingleton()
+        bind(Settings::class.java).asEagerSingleton()
         bind(Snake::class.java).asEagerSingleton()
         bind(Fruit::class.java).asEagerSingleton()
 

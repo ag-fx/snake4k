@@ -10,8 +10,11 @@ class FxBridge : Controller() {
 
     init {
         bus.register(this)
-        subscribe<RestartEvent> {
-            bus.post(it)
+        subscribe<RestartFxEvent> {
+            if (!it.wasDispatchedInGuice) {
+                it.wasDispatchedInGuice = true
+                bus.post(RestartGuiceEvent(wasDispatchedInFx = true))
+            }
         }
         subscribe<QuitEvent> {
             bus.post(it)
@@ -26,6 +29,14 @@ class FxBridge : Controller() {
     @Subscribe
     fun onExceptionEvent(event: ExceptionEvent) {
         fire(event)
+    }
+
+    @Subscribe
+    fun onRestartGuiceEvent(event: RestartGuiceEvent) {
+        if (!event.wasDispatchedInFx) {
+            event.wasDispatchedInFx = true
+            fire(RestartFxEvent(wasDispatchedInGuice = true))
+        }
     }
 
 }

@@ -34,11 +34,12 @@ class Snake4kFxApp : App(
             fire(QuitEvent)
         }
 
-        appManager.start()
+        fire(ApplicationReadyEvent)
     }
 
     private fun registerEagerSingletons() {
         find(MainController::class)
+        find(SettingsController::class)
         find(FxBridge::class)
     }
 }

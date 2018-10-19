@@ -2,7 +2,15 @@ package com.github.christophpickl.snake4k.view
 
 import tornadofx.*
 
-object RestartEvent : FXEvent()
+object ApplicationReadyEvent : FXEvent()
+
+class RestartGuiceEvent(
+    var wasDispatchedInFx: Boolean = false
+)
+
+class RestartFxEvent(
+    var wasDispatchedInGuice: Boolean = false
+) : FXEvent()
 
 class GameOverEvent(
     val detailMessage: String,
@@ -11,6 +19,7 @@ class GameOverEvent(
 ) : FXEvent()
 
 object PauseEvent : FXEvent()
+
 object QuitEvent : FXEvent()
 
 class ExceptionEvent(

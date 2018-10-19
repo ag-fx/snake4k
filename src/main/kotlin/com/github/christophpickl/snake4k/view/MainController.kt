@@ -5,6 +5,8 @@ import com.github.christophpickl.snake4k.model.State
 import com.google.common.eventbus.EventBus
 import javafx.scene.control.Alert
 import javafx.scene.control.ButtonType
+import javafx.scene.input.KeyCode
+import javafx.scene.input.KeyEvent
 import tornadofx.*
 
 class MainController : Controller() {
@@ -25,18 +27,26 @@ class MainController : Controller() {
                     "Fruits eaten: ${event.fruitsEaten}\n" +
                     "Time survived: ${formatTime(event.secondsPlayed)}",
                 buttons = *arrayOf(ButtonType("Restart"), ButtonType("Quit"))
-            )
+            ).apply {
+                dialogPane.addEventFilter(KeyEvent.KEY_PRESSED) {
+                    if (it.code == KeyCode.ENTER) {
+                        result = ButtonType("Restart")
+                        close()
+                    }
+                }
+            }
+
             currentGameOverAlert!!.let {
                 val buttonClicked = it.showAndWait()
                 if (buttonClicked.isPresent) {
                     when (buttonClicked.get().text) {
-                        "Restart" -> bus.post(RestartEvent)
+                        "Restart" -> bus.post(RestartGuiceEvent())
                         "Quit" -> bus.post(QuitEvent)
                     }
                 }
             }
         }
-        subscribe<RestartEvent> {
+        subscribe<RestartFxEvent> {
             closeDialogs()
         }
         subscribe<QuitEvent> {
@@ -60,6 +70,7 @@ class MainController : Controller() {
             )
         }
     }
+
 
     private fun closeDialogs() {
         listOfNotNull(currentGameOverAlert, currentExceptionAlert).forEach {

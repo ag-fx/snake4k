@@ -20,7 +20,7 @@ class MyMenuBar(
                 name = "Restart",
                 keyCombination = KeyCodeCombination(KeyCode.R, KeyCombination.META_DOWN)
             ).action {
-                view.fire(RestartEvent)
+                view.fire(RestartFxEvent())
             }
             item(
                 name = "Pause",
