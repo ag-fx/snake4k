@@ -1,4 +1,4 @@
-package com.github.christophpickl.snake4k
+package com.github.christophpickl.snake4k.logic
 
 import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.CurrentState

@@ -1,4 +1,4 @@
-package com.github.christophpickl.snake4k
+package com.github.christophpickl.snake4k.logic
 
 import ch.qos.logback.classic.Level
 import ch.qos.logback.classic.LoggerContext

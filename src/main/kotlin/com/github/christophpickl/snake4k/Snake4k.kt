@@ -1,19 +1,17 @@
 package com.github.christophpickl.snake4k
 
+import com.github.christophpickl.snake4k.logic.configureLogging
+import com.github.christophpickl.snake4k.view.Snake4kFxApp
 import javafx.application.Application
 import mu.KotlinLogging.logger
 
 object Snake4k {
 
-    init {
-        configureLogging()
-    }
-
-    private val log = logger {}
-
     @JvmStatic
     fun main(args: Array<String>) {
-        log.info { "Application start" }
+        configureLogging()
+        logger {}.info { "Application start" }
         Application.launch(Snake4kFxApp::class.java, *args)
     }
+
 }

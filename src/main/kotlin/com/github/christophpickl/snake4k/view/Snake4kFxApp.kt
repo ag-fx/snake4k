@@ -1,8 +1,7 @@
-package com.github.christophpickl.snake4k
+package com.github.christophpickl.snake4k.view
 
-import com.github.christophpickl.snake4k.view.FxBridge
-import com.github.christophpickl.snake4k.view.MainController
-import com.github.christophpickl.snake4k.view.MainView
+import com.github.christophpickl.snake4k.logic.ApplicationManager
+import com.github.christophpickl.snake4k.logic.GuiceModule
 import com.google.inject.Guice
 import javafx.stage.Stage
 import mu.KotlinLogging
@@ -27,7 +26,7 @@ class Snake4kFxApp : App(
     }
 
     override fun start(stage: Stage) {
-        log.debug { "start()" }
+        log.debug { "Start UI" }
         super.start(stage)
         //    defaultCloseOperation = WindowConstants.DO_NOTHING_ON_CLOSE
         //    setLocationRelativeTo(null)

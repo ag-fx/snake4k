@@ -39,10 +39,15 @@ class MyMenuBar(
     init {
         isUseSystemMenuBar = true
         menu("Application") {
-            item(name = "Restart", keyCombination = KeyCodeCombination(KeyCode.R, KeyCombination.META_DOWN)).action {
+            item(
+                name = "Restart",
+                keyCombination = KeyCodeCombination(KeyCode.R, KeyCombination.META_DOWN)
+            ).action {
                 view.fire(RestartEvent)
             }
-            item("Quit").action {
+            item(
+                name = "Quit"
+            ).action {
                 view.fire(QuitEvent)
             }
         }

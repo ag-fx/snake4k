@@ -1,4 +1,4 @@
-package com.github.christophpickl.snake4k
+package com.github.christophpickl.snake4k.logic
 
 import com.github.christophpickl.snake4k.view.QuitEvent
 import com.github.christophpickl.snake4k.view.RestartEvent
@@ -21,21 +21,21 @@ class ApplicationManager @Inject constructor(
     }
 
     fun start() {
-        log.debug { "Start game." }
+        log.debug { "Start game" }
         onRestartEvent()
     }
 
     @Suppress("UNUSED_PARAMETER")
     @Subscribe
     fun onRestartEvent(event: RestartEvent = RestartEvent) {
-        log.debug { "Received restart event." }
+        log.debug { "Received restart event" }
         engine.restart()
     }
 
     @Suppress("UNUSED_PARAMETER")
     @Subscribe
     fun onQuitEvent(event: QuitEvent = QuitEvent) {
-        log.debug { "Received quit event." }
+        log.debug { "Received quit event" }
         engine.stop()
         Platform.exit()
     }
