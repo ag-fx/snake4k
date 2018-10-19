@@ -5,9 +5,9 @@ import com.github.christophpickl.snake4k.board.Direction
 
 class Snake {
 
-    var head: Cell = Cell.empty
+    var head: Cell = Cell.none
     val body = ArrayList<Cell>()
-    var direction: Direction = Direction.RIGHT
+    var direction: Direction = Direction.Right
     var growBody = 0
 
     fun calculateNewHeadPosition() = Pair(

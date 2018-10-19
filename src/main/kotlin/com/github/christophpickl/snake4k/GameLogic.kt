@@ -34,7 +34,7 @@ class GameLogic @Inject constructor(
         state.reset()
         keyboard.collectedDirections.clear()
         snake.head = matrix.cellAt(1, 1)
-        snake.direction = Direction.RIGHT
+        snake.direction = Direction.Right
         snake.body.clear()
         snake.body.add(matrix.cellAt(0, 1))
         fruit.position = matrix.randomCell()
@@ -59,7 +59,7 @@ class GameLogic @Inject constructor(
 
     private fun checkSnakeHit(): TickResult.Died? {
         val newSnakeHeadPos = snake.calculateNewHeadPosition()
-        Log.debug { "New snake head position: $newSnakeHeadPos" }
+//        Log.debug { "New snake head position: $newSnakeHeadPos" }
         if (!matrix.cellExists(newSnakeHeadPos)) {
             return TickResult.Died("You ran into the wall.")
         }

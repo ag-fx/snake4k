@@ -7,27 +7,29 @@ enum class Direction(
     val coordinatesChange: Pair<Int, Int>
 ) {
 
-    UP(KeyCode.UP, 0 to -1),
-    DOWN(KeyCode.DOWN, 0 to 1),
-    LEFT(KeyCode.LEFT, -1 to 0),
-    RIGHT(KeyCode.RIGHT, 1 to 0);
-
-    private val neighbours by lazy {
-        when (this) {
-            Direction.UP -> setOf(LEFT, RIGHT)
-            Direction.DOWN -> setOf(LEFT, RIGHT)
-            Direction.LEFT -> setOf(UP, DOWN)
-            Direction.RIGHT -> setOf(UP, DOWN)
-        }
-    }
-
-    fun isNextTo(direction: Direction) = neighbours.contains(direction)
+    Up(KeyCode.UP, 0 to -1),
+    Down(KeyCode.DOWN, 0 to 1),
+    Left(KeyCode.LEFT, -1 to 0),
+    Right(KeyCode.RIGHT, 1 to 0);
 
     companion object {
+        val all by lazy { values().toList() }
+
         private val directionsByKeyCode by lazy {
             values().associateBy { it.keyCode }
         }
 
         fun byKeyCode(keyCode: KeyCode) = directionsByKeyCode[keyCode]
+    }
+
+    fun isNextTo(direction: Direction) = neighbours.contains(direction)
+
+    private val neighbours by lazy {
+        when (this) {
+            Direction.Up -> setOf(Left, Right)
+            Direction.Down -> setOf(Left, Right)
+            Direction.Left -> setOf(Up, Down)
+            Direction.Right -> setOf(Up, Down)
+        }
     }
 }

@@ -7,6 +7,6 @@ data class Cell(
     val xy = x to y
 
     companion object {
-        val empty = Cell(-1, -1)
+        val none = Cell(-1, -1)
     }
 }

@@ -1,6 +1,7 @@
 package com.github.christophpickl.snake4k.model
 
 import javafx.scene.paint.Color
+import java.awt.Dimension
 
 object Config {
 
@@ -13,9 +14,15 @@ object Config {
     val logEnabled = System.getProperty("snake4k.log") != null
 
 
-    val boardColor = Color.rgb(205, 220, 220)
-    val snakeBodyColor = Color.rgb(225, 225, 60)
-    val snakeHeadColor = Color.rgb(205, 205, 60)
-    val fruitColor = Color.rgb(205, 85, 65)
+    val boardColor = Color.rgb(200, 220, 220)
+    val snakeBodyColor = Color.rgb(50, 200, 50)
+    val snakeHeadColor = Color.rgb(50, 150, 50)
+    val fruitColor = Color.rgb(200, 80, 60)
 
+    val cellSize = 20
+    val cellSizeAsDouble = cellSize.toDouble()
+    val boardSize = Dimension(
+        countCols * cellSize + (countCols - 1),
+        countRows * cellSize + (countRows - 1)
+    )
 }
