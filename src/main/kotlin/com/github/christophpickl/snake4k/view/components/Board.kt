@@ -1,27 +1,21 @@
 package com.github.christophpickl.snake4k.view.components
 
-import com.github.christophpickl.snake4k.board.Matrix
-import com.github.christophpickl.snake4k.model.Config
-import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.GameState
-import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.model.State
+import com.google.inject.BindingAnnotation
 import javafx.scene.canvas.Canvas
+import java.awt.Dimension
 import javax.inject.Inject
 
-// TODO inject MatrixDrawer and PauseOverlay directly (make boardSize an injectable bean, with annotation)
 class Board @Inject constructor(
     private val state: State,
-    matrix: Matrix,
-    snake: Snake,
-    fruit: Fruit
+    private val matrixDrawer: MatrixDrawer,
+    private val pauseOverlay: PauseOverlay,
+    @BoardSize size: Dimension
 ) : Canvas(
-    Config.boardSize.width.toDouble(),
-    Config.boardSize.height.toDouble()
+    size.width.toDouble(),
+    size.height.toDouble()
 ) {
-
-    private val matrixDrawer = MatrixDrawer(matrix, snake, fruit)
-    private val pauseOverlay = PauseOverlay(width, height)
 
     init {
         repaint()
@@ -37,3 +31,8 @@ class Board @Inject constructor(
     }
 
 }
+
+@BindingAnnotation
+@Target(AnnotationTarget.FIELD, AnnotationTarget.CONSTRUCTOR, AnnotationTarget.VALUE_PARAMETER)
+@Retention(AnnotationRetention.RUNTIME)
+annotation class BoardSize

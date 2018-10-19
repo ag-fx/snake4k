@@ -10,8 +10,9 @@ import com.github.christophpickl.snake4k.view.cellStrokeLines
 import com.github.christophpickl.snake4k.view.cellStrokeLinesBy
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
+import javax.inject.Inject
 
-class MatrixDrawer(
+class MatrixDrawer @Inject constructor(
     private val matrix: Matrix,
     private val snake: Snake,
     private val fruit: Fruit

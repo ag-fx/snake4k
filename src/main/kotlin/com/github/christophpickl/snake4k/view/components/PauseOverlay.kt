@@ -5,12 +5,15 @@ import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
+import java.awt.Dimension
+import javax.inject.Inject
 
-class PauseOverlay(
-    private val width: Double,
-    private val height: Double
+class PauseOverlay @Inject constructor(
+    @BoardSize size: Dimension
 ) {
 
+    private val width = size.width.toDouble()
+    private val height = size.height.toDouble()
     private val pauseFont = Font.font("arial", FontWeight.BOLD, 30.0)
     private val pauseText = "PAUSE"
     private val pauseWidth: Float
