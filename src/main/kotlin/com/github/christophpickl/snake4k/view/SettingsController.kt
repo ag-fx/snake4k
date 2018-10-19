@@ -16,11 +16,9 @@ class SettingsController : Controller() {
 
     init {
         subscribe<ApplicationReadyEvent> {
-            println("aaaa")
             showAndRun()
         }
         subscribe<RestartFxEvent> {
-            println("xxxxx")
             showAndRun()
         }
     }

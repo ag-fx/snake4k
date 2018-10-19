@@ -10,6 +10,7 @@ import com.github.christophpickl.snake4k.view.components.Board
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import javafx.application.Platform
+import javafx.beans.value.ChangeListener
 import mu.KotlinLogging
 import java.time.Duration
 import java.time.LocalDateTime
@@ -31,6 +32,7 @@ class GameEngine @Inject constructor(
 
     private val log = KotlinLogging.logger {}
     private var timer: Timer? = null
+    private var currentTask: GameTimerTask? = null
 
     fun restart() {
         logic.resetState()
@@ -54,7 +56,7 @@ class GameEngine @Inject constructor(
         log.debug { "start engine" }
         Platform.runLater { state.gameState = GameState.Running }
         timer = Timer(true).also { currentTimer ->
-            currentTimer.scheduleAtFixedRate(GameTimerTask(state,
+            currentTask = GameTimerTask(state,
                 onTick = {
                     val result = logic.onTick()
                     if (result is TickResult.Died) {
@@ -68,7 +70,8 @@ class GameEngine @Inject constructor(
                     currentTimer.cancel()
                     e.printStackTrace()
                     bus.post(ExceptionEvent(e))
-                }), 0L, settings.speed.inMs)
+                })
+            currentTimer.scheduleAtFixedRate(currentTask, 0L, settings.speed.inMs)
         }
     }
 
@@ -87,6 +90,7 @@ class GameEngine @Inject constructor(
     private fun stopGame() {
         Platform.runLater { state.gameState = GameState.NotRunning }
         timer?.cancel()
+        currentTask?.unregister()
     }
 
 }
@@ -97,6 +101,25 @@ private class GameTimerTask(
     private val onUiTick: () -> Unit,
     private val onException: (Exception) -> Unit
 ) : TimerTask() {
+
+    private var shouldRun = false
+    private var shouldRunUiTickOnceMore = false
+
+    @Suppress("WHEN_ENUM_CAN_BE_NULL_IN_JAVA")
+    private val gameStateListener = ChangeListener<GameState> { _, _, newValue ->
+        when (newValue) {
+            GameState.NotRunning -> shouldRun = false
+            GameState.Running -> shouldRun = true
+            GameState.Paused -> {
+                shouldRun = false
+                shouldRunUiTickOnceMore = true
+            }
+        }
+    }
+
+    init {
+        state.gameStateProperty.addListener(gameStateListener)
+    }
 
     private val tickRunnable = {
         try {
@@ -114,10 +137,16 @@ private class GameTimerTask(
     }
 
     override fun run() {
-        if (state.gameState != GameState.Running) {
-            return
+        if (shouldRun) {
+            tickRunnable()
+            Platform.runLater(uiTickRunnable)
+        } else if (shouldRunUiTickOnceMore) {
+            shouldRunUiTickOnceMore = false
+            Platform.runLater(uiTickRunnable)
         }
-        tickRunnable()
-        Platform.runLater(uiTickRunnable)
+    }
+
+    fun unregister() {
+        state.gameStateProperty.removeListener(gameStateListener)
     }
 }
