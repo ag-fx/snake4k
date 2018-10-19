@@ -1,4 +1,4 @@
-package com.github.christophpickl.snake4k.view
+package com.github.christophpickl.snake4k.view.components
 
 import com.github.christophpickl.snake4k.board.Cell
 import com.github.christophpickl.snake4k.board.Direction
@@ -6,6 +6,8 @@ import com.github.christophpickl.snake4k.board.Matrix
 import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Snake
+import com.github.christophpickl.snake4k.view.cellStrokeLines
+import com.github.christophpickl.snake4k.view.cellStrokeLinesBy
 import javafx.scene.canvas.Canvas
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color

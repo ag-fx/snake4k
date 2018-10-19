@@ -3,10 +3,10 @@ package com.github.christophpickl.snake4k.logic
 import com.github.christophpickl.snake4k.model.GameState
 import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.State
-import com.github.christophpickl.snake4k.view.Board
 import com.github.christophpickl.snake4k.view.ExceptionEvent
 import com.github.christophpickl.snake4k.view.GameOverEvent
 import com.github.christophpickl.snake4k.view.RestartGuiceEvent
+import com.github.christophpickl.snake4k.view.components.Board
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
 import javafx.application.Platform

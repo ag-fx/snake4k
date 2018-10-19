@@ -2,6 +2,7 @@ package com.github.christophpickl.snake4k.view
 
 import com.github.christophpickl.snake4k.logic.ApplicationManager
 import com.github.christophpickl.snake4k.logic.GuiceModule
+import com.github.christophpickl.snake4k.view.components.MainView
 import com.google.inject.Guice
 import javafx.stage.Stage
 import mu.KotlinLogging

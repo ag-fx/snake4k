@@ -1,7 +1,8 @@
-package com.github.christophpickl.snake4k.view
+package com.github.christophpickl.snake4k.view.components
 
 import com.github.christophpickl.snake4k.model.State
 import com.github.christophpickl.snake4k.model.StateModel
+import com.github.christophpickl.snake4k.view.KeyboardWatcher
 import javafx.scene.input.KeyEvent
 import tornadofx.*
 

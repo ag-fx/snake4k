@@ -5,8 +5,8 @@ import com.github.christophpickl.snake4k.model.Fruit
 import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.model.State
-import com.github.christophpickl.snake4k.view.Board
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
+import com.github.christophpickl.snake4k.view.components.Board
 import com.google.common.eventbus.EventBus
 import com.google.inject.AbstractModule
 

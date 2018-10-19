@@ -1,4 +1,4 @@
-package com.github.christophpickl.snake4k.view
+package com.github.christophpickl.snake4k.view.components
 
 import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.SettingsModel
