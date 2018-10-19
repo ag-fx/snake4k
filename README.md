@@ -4,11 +4,9 @@ Good old snake game wrapped in a Java desktop application.
 
 # Ideas
 
-* Config could be configured in view via some start-game-dialog; via some defined presets:
+* Settings option
     * Fruit: Nut - Apple - Steak (changing the fruit growth)
-    * Map size
+    * Map size (have to resize the window)
     * Option: Can go through walls
-    * !!! Option: Small delay when hit something
-* Sounds (can be disabled), visual flashes
-    * When fruit eaten, when game over
-
+    * Option: Small delay when hit something
+* Improved highscore: based on settings-permutation
