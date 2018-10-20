@@ -17,6 +17,9 @@ class Settings {
 
     val goThroughWallProperty = SimpleBooleanProperty(this, "goThroughWall", false)
     val goThroughWall: Boolean by goThroughWallProperty
+
+    val hitDelayProperty = SimpleBooleanProperty(this, "hitDelay", false)
+    val hitDelay: Boolean by hitDelayProperty
 }
 
 class SettingsModel(settings: Settings) : ViewModel() {
@@ -24,6 +27,7 @@ class SettingsModel(settings: Settings) : ViewModel() {
     val bodyGrow = bind(propertyProducer = settings::bodyGrowProperty)
     val mapSize = bind(propertyProducer = settings::mapSizeProperty)
     val goThroughWall = bind(propertyProducer = settings::goThroughWallProperty)
+    val hitDelay = bind(propertyProducer = settings::hitDelayProperty)
 }
 
 enum class Speed(

@@ -31,8 +31,10 @@ class GameEngine @Inject constructor(
     private val log = KotlinLogging.logger {}
     private var timer: Timer? = null
     private var currentTask: GameTimerTask? = null
+    private var consumingHitDelay = false
 
     fun restart() {
+        consumingHitDelay = false
         logic.resetState()
         stop()
         start()
@@ -58,7 +60,14 @@ class GameEngine @Inject constructor(
                 onTick = {
                     val result = logic.onTick()
                     if (result is TickResult.Died) {
-                        gameOver(result.message)
+                        if (settings.hitDelay && !consumingHitDelay) {
+                            log.debug { "Hit delay for one tick" }
+                            consumingHitDelay = true
+                        } else {
+                            gameOver(result.message)
+                        }
+                    } else if (settings.hitDelay && consumingHitDelay) {
+                        consumingHitDelay = false
                     }
                 },
                 onUiTick = {

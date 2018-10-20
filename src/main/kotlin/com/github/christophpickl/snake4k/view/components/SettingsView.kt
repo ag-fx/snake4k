@@ -54,6 +54,11 @@ class SettingsView(
                                 values = MapSize.all
                             )
                         }
+                        field("Hit delay") {
+                            checkbox {
+                                bind(settingsModel.hitDelay)
+                            }
+                        }
                         field("Go through wall") {
                             checkbox {
                                 bind(settingsModel.goThroughWall)
