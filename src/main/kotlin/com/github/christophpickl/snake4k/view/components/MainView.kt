@@ -14,7 +14,7 @@ class MainView : View() {
     private val state: State by di()
     private val settings: Settings by di()
     private val stateModel = StateModel(state)
-    private val sizeOfBottomPanel = 40
+    private val sizeOfBottomPanel = 48
 
     override val root = borderpane {
         addEventFilter(KeyEvent.KEY_PRESSED, keyboard)
@@ -27,20 +27,25 @@ class MainView : View() {
             add(board)
         }
         bottom {
-            hbox {
-                label("Fruits eaten: ")
-                label { bind(stateModel.fruitsEaten) }
-
-                label(" - Highscore: ")
-                label { bind(stateModel.highscore) }
-                label(" - Sound: ")
-                checkbox {
-                    isSelected = state.enableSounds
-                    selectedProperty().addListener { _, _, isSoundEnabled ->
-                        state.enableSounds = isSoundEnabled
-                        // MINOR binding didnt work :-/
-//                        stateModel.enableSounds.value = isSoundEnabled
-//                        stateModel.commit()
+            borderpane {
+                paddingAll = 4
+                left {
+                    hbox {
+                        label("Fruits eaten: ")
+                        label { bind(stateModel.fruitsEaten) }
+                        label(" - Highscore: ")
+                        label { bind(stateModel.highscore) }
+                    }
+                }
+                right {
+                    hbox {
+                        label("Sound: ")
+                        checkbox {
+                            isSelected = state.enableSounds
+                            selectedProperty().addListener { _, _, isSoundEnabled ->
+                                state.enableSounds = isSoundEnabled
+                            }
+                        }
                     }
                 }
             }
