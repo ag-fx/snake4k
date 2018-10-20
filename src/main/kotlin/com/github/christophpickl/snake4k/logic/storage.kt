@@ -98,7 +98,7 @@ class StorageRepository {
             enableSounds = prefs.getBoolean(keyEnableSounds, defaultState.enableSounds)
         },
         highscore = Highscore().apply {
-            loadHighscore(this).forEach { loaded ->
+            loadHighscore().forEach { loaded ->
                 this[loaded.first] = loaded.second
             }
         }
@@ -113,7 +113,7 @@ class StorageRepository {
         prefs.put(keyHighscore, highscoreAsString)
     }
 
-    private fun loadHighscore(highscore: Highscore): List<Pair<HighscoreSettings, Int>> {
+    private fun loadHighscore(): List<Pair<HighscoreSettings, Int>> {
         val rawData = prefs.get(keyHighscore, "")
         if (rawData.isEmpty()) return emptyList()
         return rawData.split(highscoreSeparator).map {
