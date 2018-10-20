@@ -5,9 +5,7 @@ import com.github.christophpickl.snake4k.GameOverEvent
 import com.github.christophpickl.snake4k.model.State
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
-import javafx.scene.media.Media
-import javafx.scene.media.MediaPlayer
-import javafx.util.Duration
+import javafx.scene.media.AudioClip
 import javax.inject.Inject
 
 class SoundService @Inject constructor(
@@ -59,20 +57,9 @@ private enum class Sound(file: String) {
     EatFruit("eat_fruit.wav"),
     GameOver("game_over.wav");
 
-    private val player = MediaPlayer(Media(javaClass.getResource("/sounds/$file").toURI().toString()))
-
-    init {
-        player.setOnEndOfMedia {
-            player.seek(Duration.ZERO)
-            player.pause()
-        }
-    }
+    private val audio = AudioClip(javaClass.getResource("/sounds/$file").toURI().toString())
 
     fun play() {
-        if (player.status == javafx.scene.media.MediaPlayer.Status.PLAYING) {
-            player.seek(Duration.ZERO)
-        } else {
-            player.play()
-        }
+        audio.play()
     }
 }
