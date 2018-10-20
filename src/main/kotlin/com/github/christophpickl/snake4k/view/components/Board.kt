@@ -4,6 +4,7 @@ import com.github.christophpickl.snake4k.model.GameState
 import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.State
 import javafx.scene.canvas.Canvas
+import javafx.scene.paint.Color
 import mu.KotlinLogging
 import javax.inject.Inject
 
@@ -26,7 +27,10 @@ class Board @Inject constructor(
     fun repaint() {
         val g = graphicsContext2D
         matrixDrawer.draw(g)
-
+        if (!settings.goThroughWall) {
+            g.stroke = Color.GRAY
+            g.strokeRect(0.0, 0.0, width, height)
+        }
         if (state.gameState == GameState.Paused) {
             pauseOverlay.draw(g)
         }
