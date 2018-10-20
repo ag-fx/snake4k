@@ -59,7 +59,7 @@ class MatrixDrawer @Inject constructor(
                 (if (cellIndex == 0) snake.head else snake.body[cellIndex - 1]) to snake.body[cellIndex + 1]
             }
         }
-        cellStrokeLinesBy(cell, neighbour1, neighbour2, x, y)
+        cellStrokeLinesBy(cell, neighbour1, neighbour2, x, y, matrix.rows, matrix.cols)
     }
 
 }

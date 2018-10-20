@@ -54,6 +54,11 @@ class SettingsView(
                                 values = MapSize.all
                             )
                         }
+                        field("Go through wall") {
+                            checkbox {
+                                bind(settingsModel.goThroughWall)
+                            }
+                        }
                     }
                 }
             }

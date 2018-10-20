@@ -31,7 +31,9 @@ class GameLogic @Inject constructor(
             return it
         }
         checkFruitEaten()
-        snake.move(matrix::cellAt)
+        snake.move {
+            matrix.cellAt(calculateNewHeadPosition())
+        }
         return TickResult.Ok
     }
 
@@ -63,7 +65,7 @@ class GameLogic @Inject constructor(
     }
 
     private fun checkSnakeHit(): TickResult.Died? {
-        val newSnakeHeadPos = snake.calculateNewHeadPosition()
+        val newSnakeHeadPos = calculateNewHeadPosition()
         log.trace { "New snake head position: $newSnakeHeadPos" }
         if (!matrix.cellExists(newSnakeHeadPos)) {
             return TickResult.Died("You ran into the wall.")
@@ -76,7 +78,7 @@ class GameLogic @Inject constructor(
     }
 
     private fun checkFruitEaten() {
-        val newPos = snake.calculateNewHeadPosition()
+        val newPos = calculateNewHeadPosition()
         if (fruit.position.xy == newPos) {
             log.debug { "Fruit eaten at: $newPos" }
             Platform.runLater { state.fruitsEaten++ }
@@ -94,6 +96,22 @@ class GameLogic @Inject constructor(
         }.apply {
             log.debug { "Next fruit position: $this" }
         }
+
+    private fun calculateNewHeadPosition(): Pair<Int, Int> {
+        val newPos = Pair(
+            snake.head.x + snake.direction.coordinatesChange.first,
+            snake.head.y + snake.direction.coordinatesChange.second
+        )
+        if (!settings.goThroughWall || matrix.cellExists(newPos)) {
+            return newPos
+        }
+        return when (snake.direction) {
+            Direction.Up -> Pair(newPos.first, settings.mapSize.rows - 1)
+            Direction.Down -> Pair(newPos.first, 0)
+            Direction.Left -> Pair(settings.mapSize.cols - 1, newPos.second)
+            Direction.Right -> Pair(0, newPos.second)
+        }
+    }
 
 }
 

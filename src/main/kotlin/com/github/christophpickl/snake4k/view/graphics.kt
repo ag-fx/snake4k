@@ -5,25 +5,25 @@ import com.github.christophpickl.snake4k.board.Direction
 import com.github.christophpickl.snake4k.model.Config
 import javafx.scene.canvas.GraphicsContext
 
-fun GraphicsContext.cellStrokeLinesBy(cell: Cell, neighbour1: Cell?, neighbour2: Cell?, x: Double, y: Double) {
+fun GraphicsContext.cellStrokeLinesBy(cell: Cell, neighbour1: Cell?, neighbour2: Cell?, x: Double, y: Double, rows: Int, cols: Int) {
     val neighbourPositions = listOfNotNull(
-        neighbour1?.let { cell.positionRelativeTo(it) },
-        neighbour2?.let { cell.positionRelativeTo(it) }
+        neighbour1?.let { cell.positionRelativeTo(it, rows, cols) },
+        neighbour2?.let { cell.positionRelativeTo(it, rows, cols) }
     )
     cellStrokeLines(x, y, Direction.all.minus(neighbourPositions))
 }
 
-fun Cell.positionRelativeTo(that: Cell): Direction =
-    if (this.x - 1 == that.x && this.y == that.y) {
+fun Cell.positionRelativeTo(that: Cell, rows: Int, cols: Int): Direction =
+    if (this.y == that.y && (this.x - 1 == that.x || this.x == (cols - 1) && that.x == 0)) {
         Direction.Left
-    } else if (this.x + 1 == that.x && this.y == that.y) {
+    } else if (this.y == that.y && (this.x + 1 == that.x || this.x == 0 && that.x == (cols - 1))) {
         Direction.Right
-    } else if (this.x == that.x && this.y - 1 == that.y) {
+    } else if (this.x == that.x && (this.y - 1 == that.y || this.y == 0 && that.y == (rows - 1))) {
         Direction.Up
-    } else if (this.x == that.x && this.y + 1 == that.y) {
+    } else if (this.x == that.x && (this.y + 1 == that.y || this.y == (rows - 1) && that.y == 0)) {
         Direction.Down
     } else {
-        throw IllegalArgumentException("Cell $this is not neighbour of $that")
+        throw IllegalArgumentException("$this is not neighbour of $that")
     }
 
 fun GraphicsContext.cellStrokeLines(x: Double, y: Double, positions: List<Direction>) {

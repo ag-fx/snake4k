@@ -10,8 +10,10 @@ class Matrix @Inject constructor(
 
     private val rowsThanCols: ArrayList<ArrayList<Cell>> = ArrayList()
     private val random = Random()
-    private var rows: Int = -1
-    private var cols: Int = -1
+    var rows: Int = -1
+        private set
+    var cols: Int = -1
+        private set
 
     init {
         changeMatrix()
