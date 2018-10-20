@@ -13,12 +13,13 @@ private val context = LoggerFactory.getILoggerFactory() as LoggerContext
 private val defaultPattern = "%-43(%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread]) [%-5level] %logger{42} - %msg%n"
 
 fun configureLogging() {
-    if (System.getProperty("snake4k.log") == null) {
-        return
-    }
     val rootLogger = context.getLogger(Logger.ROOT_LOGGER_NAME)
     rootLogger.detachAndStopAllAppenders()
-    rootLogger.level = Level.ALL
+    rootLogger.level = if (System.getProperty("snake4k.log") != null) {
+        Level.ALL
+    } else {
+        Level.WARN
+    }
 
     configurePackageLevels()
     rootLogger.addAppender(buildConsoleAppender())
