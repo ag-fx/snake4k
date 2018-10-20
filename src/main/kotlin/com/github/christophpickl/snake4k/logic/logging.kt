@@ -18,7 +18,7 @@ fun configureLogging() {
     }
     val rootLogger = context.getLogger(Logger.ROOT_LOGGER_NAME)
     rootLogger.detachAndStopAllAppenders()
-    rootLogger.level = Level.DEBUG
+    rootLogger.level = Level.ALL
 
     configurePackageLevels()
     rootLogger.addAppender(buildConsoleAppender())

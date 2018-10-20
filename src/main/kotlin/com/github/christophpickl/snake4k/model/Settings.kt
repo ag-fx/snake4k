@@ -7,19 +7,21 @@ import java.awt.Dimension
 
 class Settings {
     val speedProperty = SimpleObjectProperty(this, "speed", Speed.Normal)
-    val speed: Speed by speedProperty
+    var speed: Speed by speedProperty
 
     val bodyGrowProperty = SimpleObjectProperty(this, "bodyGrow", BodyGrow.Normal)
-    val bodyGrow: BodyGrow by bodyGrowProperty
+    var bodyGrow: BodyGrow by bodyGrowProperty
 
     val mapSizeProperty = SimpleObjectProperty(this, "bodyGrow", MapSize.Normal)
-    val mapSize: MapSize by mapSizeProperty
+    var mapSize: MapSize by mapSizeProperty
 
     val goThroughWallProperty = SimpleBooleanProperty(this, "goThroughWall", false)
-    val goThroughWall: Boolean by goThroughWallProperty
+    var goThroughWall: Boolean by goThroughWallProperty
 
     val hitDelayProperty = SimpleBooleanProperty(this, "hitDelay", false)
-    val hitDelay: Boolean by hitDelayProperty
+    var hitDelay: Boolean by hitDelayProperty
+
+    override fun toString() = "Settings(speed=$speed, bodyGrow=$bodyGrow, mapSize=$mapSize, goThroughWall=$goThroughWall, hitDelay=$hitDelay)"
 }
 
 class SettingsModel(settings: Settings) : ViewModel() {
