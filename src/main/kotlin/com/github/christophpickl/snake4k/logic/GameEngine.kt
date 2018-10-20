@@ -2,6 +2,7 @@ package com.github.christophpickl.snake4k.logic
 
 import com.github.christophpickl.snake4k.ExceptionEvent
 import com.github.christophpickl.snake4k.GameOverEvent
+import com.github.christophpickl.snake4k.GameStartEvent
 import com.github.christophpickl.snake4k.RestartGuiceEvent
 import com.github.christophpickl.snake4k.model.GameState
 import com.github.christophpickl.snake4k.model.Settings
@@ -55,6 +56,7 @@ class GameEngine @Inject constructor(
     private fun start() {
         log.debug { "start engine" }
         Platform.runLater { state.gameState = GameState.Running }
+        bus.post(GameStartEvent)
         timer = Timer(true).also { currentTimer ->
             currentTask = GameTimerTask(state,
                 onTick = {

@@ -10,7 +10,7 @@ class State {
     val fruitsEatenProperty = SimpleIntegerProperty(this, "fruitsEaten", 0)
     var fruitsEaten by fruitsEatenProperty
 
-    val highscoreProperty = SimpleIntegerProperty(this, "highscore", -1)
+    val highscoreProperty = SimpleIntegerProperty(this, "highscore", 0)
     var highscore by highscoreProperty
 
     var directionsChanged = 0

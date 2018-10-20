@@ -12,6 +12,8 @@ class RestartFxEvent(
     var wasDispatchedInGuice: Boolean = false
 ) : FXEvent()
 
+object GameStartEvent
+
 class GameOverEvent(
     val detailMessage: String,
     val fruitsEaten: Int,

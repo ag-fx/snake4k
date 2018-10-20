@@ -18,6 +18,8 @@ class GuiceModule : AbstractModule() {
         bind(ApplicationManager::class.java).asEagerSingleton()
         bind(StorageService::class.java).asEagerSingleton()
         bind(SoundService::class.java).asEagerSingleton()
+        bind(HighscoreService::class.java).asEagerSingleton()
+        bind(Highscore::class.java).asEagerSingleton()
 
         bind(State::class.java).asEagerSingleton()
         bind(Settings::class.java).asEagerSingleton()
