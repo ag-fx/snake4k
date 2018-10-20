@@ -1,7 +1,9 @@
 # Snake4k
 
-Good old snake game wrapped in a Java desktop application.
+The good old snake game wrapped in a Java desktop application written in Kotlin.
 
-# Ideas
+[**Download**](https://github.com/christophpickl/snake4k/releases/latest) the latest release!
 
-* Improved highscore: based on settings-permutation
+![screenshot_main.gif](https://github.com/christophpickl/snake4k/raw/master/doc/screenshot_main.gif "Snake4k Screenshot")
+
+![screenshot_menu.gif](https://github.com/christophpickl/snake4k/raw/master/doc/screenshot_menu.gif "Snake4k Screenshot")
