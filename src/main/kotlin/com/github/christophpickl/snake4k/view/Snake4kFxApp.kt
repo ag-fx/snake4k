@@ -32,6 +32,7 @@ class Snake4kFxApp : App(
         log.debug { "Start UI" }
         super.start(stage)
 
+        stage.isResizable = false
         stage.setOnCloseRequest {
             it.consume() // disable macos' default CMD+Q
             fire(QuitEvent)

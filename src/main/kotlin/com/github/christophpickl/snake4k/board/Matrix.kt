@@ -1,19 +1,33 @@
 package com.github.christophpickl.snake4k.board
 
-import com.github.christophpickl.snake4k.model.Config
-import com.github.christophpickl.snake4k.model.Config.countCols
-import com.github.christophpickl.snake4k.model.Config.countRows
+import com.github.christophpickl.snake4k.model.Settings
 import java.util.Random
+import javax.inject.Inject
 
-class Matrix {
+class Matrix @Inject constructor(
+    private val settings: Settings
+) {
 
     private val rowsThanCols: ArrayList<ArrayList<Cell>> = ArrayList()
     private val random = Random()
+    private var rows: Int = -1
+    private var cols: Int = -1
 
     init {
-        0.until(Config.countRows).forEach { y ->
+        changeMatrix()
+        settings.mapSizeProperty.addListener { _ ->
+            changeMatrix()
+        }
+    }
+
+    private fun changeMatrix() {
+        rows = settings.mapSize.rows
+        cols = settings.mapSize.cols
+
+        rowsThanCols.clear()
+        0.until(rows).forEach { y ->
             val row = ArrayList<Cell>()
-            0.until(Config.countCols).forEach { x ->
+            0.until(cols).forEach { x ->
                 row += Cell(x, y)
             }
             rowsThanCols += row
@@ -32,10 +46,10 @@ class Matrix {
     }
 
     fun cellExists(xy: Pair<Int, Int>) =
-        xy.first in 0..(countCols - 1) && xy.second in 0..(countRows - 1)
+        xy.first in 0..(cols - 1) && xy.second in 0..(rows - 1)
 
     fun randomCell() = cellAt(
-        random.nextInt(Config.countCols),
-        random.nextInt(Config.countRows)
+        random.nextInt(cols),
+        random.nextInt(rows)
     )
 }

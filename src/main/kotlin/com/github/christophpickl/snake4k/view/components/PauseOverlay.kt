@@ -1,25 +1,30 @@
 package com.github.christophpickl.snake4k.view.components
 
+import com.github.christophpickl.snake4k.model.Settings
 import com.sun.javafx.tk.Toolkit
 import javafx.scene.canvas.GraphicsContext
 import javafx.scene.paint.Color
 import javafx.scene.text.Font
 import javafx.scene.text.FontWeight
-import java.awt.Dimension
 import javax.inject.Inject
 
 class PauseOverlay @Inject constructor(
-    @BoardSize size: Dimension
+    private val settings: Settings
 ) {
 
-    private val width = size.width.toDouble()
-    private val height = size.height.toDouble()
+    private var width = -1.0
+    private var height = -1.0
+
     private val pauseFont = Font.font("arial", FontWeight.BOLD, 30.0)
     private val pauseText = "PAUSE"
     private val pauseWidth: Float
     private val pauseHeight: Float
 
     init {
+        changeSize()
+        settings.mapSizeProperty.addListener { _ ->
+            changeSize()
+        }
         val metrics = Toolkit.getToolkit().fontLoader.getFontMetrics(pauseFont)
         pauseWidth = metrics.computeStringWidth(pauseText)
         pauseHeight = metrics.lineHeight
@@ -33,6 +38,11 @@ class PauseOverlay @Inject constructor(
         g.font = pauseFont
 
         g.fillText(pauseText, (width - pauseWidth) / 2, (height - pauseHeight) / 2)
+    }
+
+    private fun changeSize() {
+        width = settings.mapSize.boardSize.getWidth()
+        height = settings.mapSize.boardSize.getHeight()
     }
 
 }

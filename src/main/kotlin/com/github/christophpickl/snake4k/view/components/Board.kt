@@ -1,24 +1,23 @@
 package com.github.christophpickl.snake4k.view.components
 
 import com.github.christophpickl.snake4k.model.GameState
+import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.State
-import com.google.inject.BindingAnnotation
 import javafx.scene.canvas.Canvas
-import java.awt.Dimension
 import javax.inject.Inject
 
 class Board @Inject constructor(
     private val state: State,
     private val matrixDrawer: MatrixDrawer,
     private val pauseOverlay: PauseOverlay,
-    @BoardSize size: Dimension
-) : Canvas(
-    size.width.toDouble(),
-    size.height.toDouble()
-) {
+    private val settings: Settings
+) : Canvas(settings.mapSize.boardSize.getWidth(), settings.mapSize.boardSize.getHeight()) {
 
     init {
         repaint()
+        settings.mapSizeProperty.addListener { _ ->
+            changeSize()
+        }
     }
 
     fun repaint() {
@@ -30,9 +29,8 @@ class Board @Inject constructor(
         }
     }
 
+    private fun changeSize() {
+        width = settings.mapSize.boardSize.getWidth()
+        height = settings.mapSize.boardSize.getHeight()
+    }
 }
-
-@BindingAnnotation
-@Target(AnnotationTarget.FIELD, AnnotationTarget.CONSTRUCTOR, AnnotationTarget.VALUE_PARAMETER)
-@Retention(AnnotationRetention.RUNTIME)
-annotation class BoardSize

@@ -1,6 +1,7 @@
 package com.github.christophpickl.snake4k.view.components
 
 import com.github.christophpickl.snake4k.model.BodyGrow
+import com.github.christophpickl.snake4k.model.MapSize
 import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.SettingsModel
 import com.github.christophpickl.snake4k.model.Speed
@@ -41,10 +42,16 @@ class SettingsView(
                                 values = Speed.all
                             )
                         }
-                        field("Body Grow") {
+                        field("Body growth") {
                             combobox(
                                 property = settingsModel.bodyGrow,
                                 values = BodyGrow.all
+                            )
+                        }
+                        field("Map size") {
+                            combobox(
+                                property = settingsModel.mapSize,
+                                values = MapSize.all
                             )
                         }
                     }
