@@ -5,8 +5,6 @@ import java.awt.Dimension
 
 object Config {
 
-    val bodyGrowFactorOnFruitEaten = 3
-
     val boardColor = Color.rgb(200, 220, 220)
     val snakeBodyColor = Color.rgb(50, 200, 50)
     val snakeHeadColor = Color.rgb(50, 150, 50)

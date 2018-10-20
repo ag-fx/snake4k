@@ -1,5 +1,6 @@
 package com.github.christophpickl.snake4k.view.components
 
+import com.github.christophpickl.snake4k.model.BodyGrow
 import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.SettingsModel
 import com.github.christophpickl.snake4k.model.Speed
@@ -38,6 +39,12 @@ class SettingsView(
                             combobox(
                                 property = settingsModel.speed,
                                 values = Speed.all
+                            )
+                        }
+                        field("Body Grow") {
+                            combobox(
+                                property = settingsModel.bodyGrow,
+                                values = BodyGrow.all
                             )
                         }
                     }

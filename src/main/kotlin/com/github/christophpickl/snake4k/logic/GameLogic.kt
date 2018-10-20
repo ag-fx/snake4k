@@ -4,8 +4,8 @@ import com.github.christophpickl.snake4k.FruitEatenEvent
 import com.github.christophpickl.snake4k.board.Cell
 import com.github.christophpickl.snake4k.board.Direction
 import com.github.christophpickl.snake4k.board.Matrix
-import com.github.christophpickl.snake4k.model.Config
 import com.github.christophpickl.snake4k.model.Fruit
+import com.github.christophpickl.snake4k.model.Settings
 import com.github.christophpickl.snake4k.model.Snake
 import com.github.christophpickl.snake4k.model.State
 import com.github.christophpickl.snake4k.view.KeyboardWatcher
@@ -20,7 +20,8 @@ class GameLogic @Inject constructor(
     private val snake: Snake,
     private val fruit: Fruit,
     private val state: State,
-    private val bus: EventBus
+    private val bus: EventBus,
+    private val settings: Settings
 ) {
     private val log = KotlinLogging.logger {}
 
@@ -79,7 +80,7 @@ class GameLogic @Inject constructor(
         if (fruit.position.xy == newPos) {
             log.debug { "Fruit eaten at: $newPos" }
             Platform.runLater { state.fruitsEaten++ }
-            snake.growBody += Config.bodyGrowFactorOnFruitEaten
+            snake.growBody += settings.bodyGrow.factor
             fruit.position = nextFruitPosition()
             bus.post(FruitEatenEvent)
         }
